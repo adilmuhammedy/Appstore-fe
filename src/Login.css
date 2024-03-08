@@ -1,0 +1,141 @@
+#bgcontainer{
+    position: absolute;
+    height:100%;
+    width:100%;
+    background-color: rgba(74, 72, 77, 0.53);
+}
+#login-container {
+    position:absolute;
+    left:400px;
+    top:0px;
+    width: 400px;
+    height:500px;
+    margin: 0 auto;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgba(241, 241, 243, 0.705);
+  }
+  #allgoimg{
+    position:absolute;
+    left:0px;
+    top:0px;
+    width: 400px;
+    height: 500px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px; 
+  }
+#bgleft{
+    position:absolute;
+    left:250px;
+    top:100px;
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: rgb(0, 0, 0);
+}
+  
+  
+ #username{
+    position:absolute;
+    top:120px;  
+    left:20px;
+ }
+   
+ #password{
+    position:absolute;
+    top:160px; 
+    left:20px;  
+ }
+  #login-container input[type="username"] {
+
+    position:absolute;
+    top:120px;
+    left:100px; 
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  #login-container input[type="password"] {
+
+    position:absolute;
+    top:160px;
+    left:100px; 
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  #login-container input[type="checkbox"] {
+    position:absolute;
+    top:202px;
+    left:17px; 
+  
+  }
+  #keep-logged-in{
+    position:absolute;
+    top:200px;
+    left:40px; 
+  }
+  #forgot{
+    position:absolute;
+    top:200px;
+    left:240px; 
+  }
+  
+  #login{
+    position:absolute;
+    top:250px;
+    left:160px; 
+    width: 100px;
+    padding: 10px;
+    background-color: rgba(231, 121, 43, 0.7);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  #login-container button:hover {
+    background-color: rgba(30, 26, 23, 0.7)
+  }
+  
+  #login-container a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  #login-container a:hover {
+    text-decoration: underline;
+  }
+  
+  #signup-container {
+    position:absolute;
+    top:300px;
+    left:20px; 
+  }
+  
+  #signup-container p {
+    margin-bottom: 10px;
+  }
+  
+  #signup-container button {
+    position:absolute;
+    top:10px;
+    left:220px; 
+    width: 100px;
+    padding: 10px;
+    background-color: rgba(231, 121, 43, 0.7);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  #signup-container button:hover {
+    background-color: rgba(30, 26, 23, 0.7)
+  }
+  
