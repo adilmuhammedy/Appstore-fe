@@ -1,0 +1,31 @@
+.modal {
+    position: fixed;
+    top: 20px;
+    left: 350px;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.modal-content{
+    position: absolute;
+}
+#upload-txt{
+    position: absolute;
+    left:200px;
+    top:0px;
+}
+#submit-btn{
+    position:absolute;
+    left:240px;
+    top:420px;
+    width:90px;
+    height:30px;
+    background-color: black;
+    border: 0cap;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+

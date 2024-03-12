@@ -8,6 +8,9 @@ function Login() {
     const [keepLoggedIn, setKeepLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    const handleCreateOne=()=>{
+      window.location.href='./Register';
+    }
     const handleLogin = async () => {
       if (!username.trim() || !password.trim()) {
           window.alert("Please fill all fields");
@@ -71,7 +74,7 @@ function Login() {
       <button id="login" onClick={handleLogin}>Login</button>
       <div id="signup-container">
         <p>Don't have an account yet?</p>
-        <button>Create one</button>
+        <button onClick={handleCreateOne}>Create one</button>
       </div>
     </div>
 </div>
