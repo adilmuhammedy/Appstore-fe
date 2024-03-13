@@ -24,13 +24,6 @@
     position:absolute;
     top:200px;
     left:190px;
-    padding-inline:20px;
-    padding-block: 10px;
-    background-color: black;
-    color:azure;
-    cursor:pointer;
-    border-radius: 5px;
-
   }
   #upload-card {
     position: absolute;

@@ -1,11 +1,11 @@
 import React from 'react';
 
-function appContainer(){
+function appContainer({appName}){
     return (
         <div id="app-container">
+            <h>{appName}</h>
         </div>
     );
 
 }
-
 export default appContainer;
