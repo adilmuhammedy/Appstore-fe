@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from './Components/Navbar';
 import './Upload.css';
+import Primarybtn from './Components/primaryButton';
 const FileUploadModal = () => {
   const [file, setFile] = useState(null);
   const [apkName, setApkName] = useState('');
@@ -153,7 +154,9 @@ const FileUploadModal = () => {
             <input type="file" onChange={handleFileChange} />
             {/* Add more input fields as needed */}
             <br></br>
-            <button type="submit" id="submit-btn">Submit</button>
+            <div id="uploadsubmit">
+            <Primarybtn buttonText="Submit"></Primarybtn>
+            </div>
           </form>
         </div>
       </div>
