@@ -39,35 +39,15 @@
   
  #username{
     position:absolute;
-    top:120px;  
+    top:100px;  
     left:20px;
  }
    
  #password{
     position:absolute;
-    top:160px; 
+    top:140px; 
     left:20px;  
  }
-  #login-container input[type="username"] {
-
-    position:absolute;
-    top:120px;
-    left:100px; 
-    width: 220px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  #login-container input[type="password"] {
-
-    position:absolute;
-    top:160px;
-    left:100px; 
-    width: 220px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
   
   #login-container input[type="checkbox"] {
     position:absolute;

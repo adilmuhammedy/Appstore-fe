@@ -1,0 +1,18 @@
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Optional: Adjust the spacing between input fields */
+}
+
+#inputfield {
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-left: 1px; /* Optional: Adjust the spacing between label and input */
+}
+
+#inputtxt {
+    display: inline;
+    margin-right: 5px; /* Optional: Adjust the spacing between label and input */
+}

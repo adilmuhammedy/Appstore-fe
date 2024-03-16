@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import allgoimage from './images/Allgoblack.png';
 import PrimaryButton from './Components/primaryButton';
+import Input from './Components/Inputfield';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -12,6 +13,13 @@ function Login() {
   const handleCreateOne = () => {
     window.location.href = './Register';
   }
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
   const handleLogin = async () => {
     if (!username.trim() || !password.trim()) {
       window.alert("Please fill all fields");
@@ -48,24 +56,18 @@ function Login() {
       }
     }
   };
-
-
-
   return (
     <div id="bgcontainer">
-
       <div id="bgleft">
         <img id="allgoimg" src={allgoimage} alt='' />
         <div id="login-container">
 
-          <div>
-            <label id="username">Username:</label>
-            <input type="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <label id="password">Password:</label>
-            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
+        <div id="username"> 
+       <Input inputType="Username" value={username} onChange={handleUsernameChange}></Input>
+        </div>
+          <div id="password"> 
+          <Input inputType="password" value={password} onChange={handlePasswordChange}></Input>
+        </div>
           <div>
             <input type="checkbox" id="keep-logged-in" checked={keepLoggedIn} onChange={(e) => setKeepLoggedIn(e.target.checked)} />
             <label id="keep-logged-in">Keep me logged in</label>
@@ -83,8 +85,9 @@ function Login() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    
+  </div>
+  </div>
   );
 }
 
