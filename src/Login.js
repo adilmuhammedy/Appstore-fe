@@ -62,11 +62,11 @@ function Login() {
         <img id="allgoimg" src={allgoimage} alt='' />
         <div id="login-container">
 
-        <div id="username"> 
-       <Input inputType="Username" value={username} onChange={handleUsernameChange}></Input>
+        <div id="usernamee"> 
+       <Input label="Username" inputType="Username" value={username} onChange={handleUsernameChange}></Input>
         </div>
-          <div id="password"> 
-          <Input inputType="password" value={password} onChange={handlePasswordChange}></Input>
+          <div id="passwordd"> 
+          <Input label="Password " inputType="password" value={password} onChange={handlePasswordChange}></Input>
         </div>
           <div>
             <input type="checkbox" id="keep-logged-in" checked={keepLoggedIn} onChange={(e) => setKeepLoggedIn(e.target.checked)} />

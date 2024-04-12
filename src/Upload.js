@@ -1,166 +1,202 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Components/Navbar';
-import './Upload.css';
+import { useNavigate } from 'react-router-dom';
 import Primarybtn from './Components/primaryButton';
+import { useFormData } from './FormDataContext';
+import Input from './Components/Inputfield';
+import './Upload.css';
+
 const FileUploadModal = () => {
-  const [file, setFile] = useState(null);
-  const [apkName, setApkName] = useState('');
-  const [appName, setAppName] = useState('');
-  const [appDescription, setAppDescription] = useState('');
+  const { formData, updateFormData } = useFormData();
+  const [screenshotfile, setscreenshotFile] = useState(formData.screenshotfile || []);
+  const [appiconfile, setappiconFile] = useState(formData.appiconfile || []);
+  const [apkName, setApkName] = useState(formData.apkName || '');
+  const [ageRating, setAgeRating] = useState(formData.ageRating || '');
+  const [appCategory, setCategory] = useState(formData.appCategory || '');
+  const [tags, setTags] = useState(formData.tags || '');
+  const [appShortDescription, setShortDescription] = useState(formData.appShortDescription || '');
+  const [appLongDescription, setLongDescription] = useState(formData.appLongDescription || '');
+  const [supportUrl, setSupportURL] = useState(formData.supportUrl || '');
+  const [websiteUrl, setWebsiteURL] = useState(formData.websiteUrl || '');
+  const [appVideo, setAppVideo] = useState(formData.appVideo || null);
+  const [apkFile, setApkFile] = useState(formData.apkFile || null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    updateFormData({
+ 
+      apkName,
+      ageRating,
+      appCategory,
+      tags,
+      appShortDescription,
+      appLongDescription,
+      supportUrl,
+      websiteUrl,
+      appVideo,
+      screenshotfile,
+      appiconfile,
+      apkFile,
+    });
+  }, [      
+    apkName,
+    ageRating,
+    appCategory,
+    tags,
+    appShortDescription,
+    appLongDescription,
+    supportUrl,
+    websiteUrl,
+    appVideo,
+    screenshotfile,
+    appiconfile,
+    apkFile,
+    updateFormData
+  ]);
+
+
 
   const handleClose = () => {
     window.location.href = './Home';
   };
 
-  const handleFileChange = (e) => {
+  const handleApkFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+    setApkFile(selectedFile);
+  };
+
+
+  const handlevideoFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setAppVideo(selectedFile);
+  };
+
+  const handlescreenshotFileChange = (e) => {
+    const screenshotfile = Array.from(e.target.files);
+    setscreenshotFile(screenshotfile);
+  };
+
+
+  const handleappiconFileChange = (e) => {
+    const selectedFile = Array.from(e.target.files);
+    setappiconFile(selectedFile);
   };
 
   const handleApkNameChange = (e) => {
     setApkName(e.target.value);
   };
-
-  const handleAppNameChange = (e) => {
-    setAppName(e.target.value);
+  const handleAgeRatingChange = (e) => {
+    setAgeRating(e.target.value);
+  };
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleTags = (e) => {
+    setTags(e.target.value);
+  };
+  const handlesupportUrl = (e) => {
+    setSupportURL(e.target.value);
+  };
+  const handleWebsiteUrl = (e) => {
+    setWebsiteURL(e.target.value);
+  };
+  const handleShortDescriptionChange = (e) => {
+    setShortDescription(e.target.value);
+  };
+  const handleLongDescriptionChange = (e) => {
+    setLongDescription(e.target.value);
   };
 
-  const handleAppDescriptionChange = (e) => {
-    setAppDescription(e.target.value);
-  };
+  const handlePreview = async () => {
+    const previewData = {
+      apkName,
+      ageRating,
+      appCategory,
+      tags,
+      appShortDescription,
+      appLongDescription,
+      supportUrl,
+      websiteUrl,
+      appVideo,
+      screenshotfile,
+      appiconfile,
+      apkFile
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!file) {
-      console.error('No file selected');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('apkName', apkName);
-    formData.append('appName', appName);
-    formData.append('appDescription', appDescription);
-
-    try {
-      // POST request to upload the file
-      const response = await axios.post('http://localhost:4000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      window.alert('File uploaded successfully:', response.data);
-      window.location.href = './Home';
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400 && error.response.data.error) {
-          window.alert(error.response.data.error);
-        } else {
-          window.alert('An error occurred while uploading the file.');
-          console.error('Error uploading file:', error.response);
-        }
-      } else if (error.request) {
-        // The request was made but no response was received
-        window.alert('No response received from the server.');
-        console.error('Error uploading file:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an error
-        window.alert('Error setting up the request.');
-        console.error('Error uploading file:', error.message);
-      }
-    }
+    // Navigate to the preview page with previewData
+    navigate('/Preview', { state: { previewData } });
   };
 
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
-      <div className="modal">
-        <div className="modal-content">
-          <span className="close" onClick={handleClose}>&times;</span>
-          <h2 id="upload-txt">Upload File</h2>
-          <form onSubmit={handleSubmit}>
+      <Navbar />
+      <div id="uploadcontainer" className="fixed right-16 top-12 w-2/3 md:w-120 h-172 bg-white rounded-lg shadow-lg overflow-y-auto flex flex-col justify-center items-center">
 
-            <label>APK name: </label>
-            <input
-              type="text"
-              placeholder="Enter APK name"
-              className="nameip"
-              value={apkName}
-              onChange={handleApkNameChange}
-              required
-            />
-            <br></br>
-            <label>APK Description: </label>
-            <input
-              type="text"
-              placeholder="Enter App description"
-              className="descip"
-              value={appName}
-              onChange={handleAppNameChange}
-              required
-            />
-            <br></br>
-            <label>Version info: </label>
-            <input
-              type="text"
-              placeholder="Version"
-              className="verip"
-              value={appDescription}
-              onChange={handleAppDescriptionChange}
-              required
-            />
-            <br></br>
-            <label>APK Permissions: </label>
-            <input
-              type="text"
-              placeholder="permissions"
-              className="permip"
-              value={appDescription}
-              onChange={handleAppDescriptionChange}
-              required
-            />
-            <br></br>
-            <label>Device Compatibility: </label>
-            <input
-              type="text"
-              className="compip"
-              value={appDescription}
-              onChange={handleAppDescriptionChange}
-              required
-            />
-            <br></br>
-            <br></br>
 
-            <label>Sample Screenshots: </label>
-            <input type="file" />
-            <br></br>
-            <br></br>
-            <label>Support contact info: </label>
-            <input
-              type="text"
-              className="nameip"
-              value={appDescription}
-              onChange={handleAppDescriptionChange}
-              required
-            />
-            <br></br>
-            <br></br>
-            <label>Upload apk file: </label>
-            <input type="file" onChange={handleFileChange} />
-            {/* Add more input fields as needed */}
-            <br></br>
-            <div id="uploadsubmit">
-            <Primarybtn buttonText="Submit"></Primarybtn>
-            </div>
-          </form>
-        </div>
+      <span id="closeBtn" className="absolute top-2 right-2 cursor-pointer" onClick={handleClose}>&times;</span>
+<h2 id="uploadTitle" className="text-xl font-bold mb-6">Upload APK</h2>
+<form id="uploadForm" onSubmit={handlePreview} className="flex flex-col gap-4">
+ 
+  
+      <div id="apkNameInput">
+      <Input label="APK Name" inputType="text" value={apkName} onChange={handleApkNameChange} />
       </div>
+
+      <div id="ageRating">
+      <Input label="Age Rating" inputType="text" value={ageRating} onChange={handleAgeRatingChange} />
     </div>
+
+      <div id="apkCategory">
+      <Input label="Category"  inputType="text" value={appCategory} onChange={handleCategoryChange} />
+      </div>
+
+      <div id="apkTags" >
+      <Input label="Tags"  inputType="text" value={tags} onChange={handleTags} />
+      </div>
+
+      <div >
+        <label id="shortDescLabel">Short Description</label>
+      <textarea id="shortDesc"  value={appShortDescription} onChange={handleShortDescriptionChange} ></textarea>
+      </div>
+
+      <div >
+      <label id="longDescLabel">Long Description</label>
+      <textarea id="longDesc" value={appLongDescription} onChange={handleLongDescriptionChange}></textarea>
+    </div>
+ 
+   
+      <div id="supporturlInput" >
+      <Input label="Supporting URL" inputType="text" value={supportUrl} onChange={handlesupportUrl} />
+      </div>
+
+      <div id="websiteurlInput" >
+      <Input label="Website URL" inputType="text" value={websiteUrl} onChange={handleWebsiteUrl} />
+      </div>
+  
+
+    <div id="sampleScreenshotContainer" className="flex flex-col">
+    <label>Sample Screenshots:</label>
+    <input id="sampleScreenshotInput" type="file" onChange={handlescreenshotFileChange} />
+  </div>
+  <div id="sampleVideoContainer" className="flex flex-col">
+    <label>Sample Videos:</label>
+    <input id="sampleVideoInput" type="file" onChange={handlevideoFileChange} />
+  </div>
+  <div id="appIconContainer" className="flex flex-col">
+    <label>App Icons:</label>
+    <input id="appIconInput" type="file" onChange={handleappiconFileChange} />
+  </div>
+  <div id="uploadAPKContainer" className="flex flex-col">
+    <label>Upload APK File:</label>
+    <input id="uploadAPKInput" type="file" onChange={handleApkFileChange} required />
+  </div>
+  <div id="previewButtonContainer">
+    <Primarybtn id="previewButton" buttonText="Preview" />
+  </div>
+</form>
+
+</div>
+</div>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './Myapps.css';
 import axios from 'axios'; 
 import Navbar from './Components/Navbar';
-
+import './Myapps.css';
 
 function Myapps() {
     const [apps, setApps] = useState([]);
+
     const fetchApps = async () => {
         try {
             const response = await axios.get('http://localhost:4000/applist');
@@ -14,17 +14,19 @@ function Myapps() {
             console.error('Error fetching apps:', error);
         }
     };
+
     useEffect(() => {
         fetchApps();
     }, []);
+
     return (
         <div className="myapps-bg">
             <Navbar />
             <div className="app-container">
-                <div className="row-container">
+                <div className="flex flex-wrap">
                     {apps.map((appName, index) => (
-                        <div className="app-item" key={index}>
-                            <h3 className="app-name">{appName}</h3>
+                        <div className="app-item p-4 border border-gray-300 rounded-lg shadow-md m-8 cursor-pointer" key={index}>
+                            <h3 className="app-name text-base">{appName}</h3>
                         </div>
                     ))}
                 </div>

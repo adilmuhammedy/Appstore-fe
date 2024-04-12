@@ -1,83 +1,92 @@
-#navbar{
-    position: absolute;
-    top:0px;
-    height:673px;
-    width:240px;
-    background-color:rgb(63, 66, 77);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+#navbar {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 240px;
+  background-color: rgb(63, 66, 77);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
-#nav-container{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0px;
+
+#nav-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 20px;
+  left: 0;
 }
+
 .nav-link {
-    width: 120px;
-    color: white;
-    margin-bottom: 20px; 
-    margin-top: 20px; 
-    margin-left: 10px;
-    list-style-type: none; 
-    text-decoration: none; 
-    padding: 10px; 
-    position: relative; 
-    cursor:pointer;
-  }
-  .nav-link:nth-child(8)::after {
-    content: "";
-    position: absolute;
-    bottom: -20px; 
-    left: -20px;
-    width: 180px;
-    height: 1.5px;
-    background-color: white;
-  }
-  .nav-link:hover {
-    background-color: rgba(228, 228, 228, 0.231);
-    border-radius: 5px;
-  }
-  #homeimg{
-    position: absolute;
-    left:25px;
-    top:30px;
-    height:20px;
-    width:20px;
-  }
-  #myappsimg{
-    position: absolute;
-    left:25px;
-    top: 92px;
-    height:20px;
-    width:20px;
-  }
-  #analyticsimg{
-    position: absolute;
-    left:25px;
-    top:152px;
-    height:20px;
-    width:20px;
-  }
-  #profileimg{
-    position: absolute;
-    left:25px;
-    top:213px;
-    height:20px;
-    width:20px;
-  }
-  #settingimg{
-    position: absolute;
-    left:25px;
-    top:275px;
-    height:20px;
-    width:20px;
-  }
-  #logoutimg{
-    position: absolute;
-    left:25px;
-    top:336px;
-    height:20px;
-    width:20px;
-  }
+  width: 120px;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  list-style-type: none;
+  text-decoration: none;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-link:nth-child(8)::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 180px;
+  height: 1.5px;
+  background-color: white;
+}
+
+.nav-link:hover {
+  background-color: rgba(228, 228, 228, 0.231);
+  border-radius: 5px;
+}
+
+#homeimg {
+  position: absolute;
+  left: 25px;
+  top: 30px;
+  height: 20px;
+  width: 20px;
+}
+
+#myappsimg {
+  position: absolute;
+  left: 25px;
+  top: 92px;
+  height: 20px;
+  width: 20px;
+}
+
+#analyticsimg {
+  position: absolute;
+  left: 25px;
+  top: 152px;
+  height: 20px;
+  width: 20px;
+}
+
+#profileimg {
+  position: absolute;
+  left: 25px;
+  top: 213px;
+  height: 20px;
+  width: 20px;
+}
+
+#settingimg {
+  position: absolute;
+  left: 25px;
+  top: 275px;
+  height: 20px;
+  width: 20px;
+}
+
+#logoutimg {
+  position: absolute;
+  left: 25px;
+  top: 336px;
+  height: 20px;
+  width: 20px;
+}

@@ -7,6 +7,8 @@ import Myapps from './Myapps.js';
 import Metadata from './Metadata.js';
 import Register from './Register.js';
 import Upload from './Upload.js';
+import Preview from './Preview.js';
+
 
 function App() {
   useEffect(() => {
@@ -22,6 +24,7 @@ function App() {
         <Route path="/Metadata" element={<Metadata/>} />
         <Route path="/Register" element={<Register/>}/>
         <Route path="/Upload" element={<Upload/>}/>
+        <Route path="Preview" element={<Preview/>}/>
     </Routes>
     </BrowserRouter>
    
