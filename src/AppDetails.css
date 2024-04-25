@@ -1,0 +1,68 @@
+.app-details-container {
+    max-width: 800px;
+    margin-top: 50px;
+    margin-left: 300px;
+    padding: 20px;
+    overflow: hidden;  /* This will contain the absolute positioned elements */
+}
+
+.app-nametext{
+    margin-bottom: 0px;
+    color: #333;
+    font-size: 40px;
+}
+
+
+.app-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.app-info p {
+    margin-bottom: 10px;
+}
+
+.screenshot-list {
+    position: relative;  /* Change to relative */
+    width: auto;  /* Auto width */
+    overflow-x: auto;  /* Horizontal scroll for overflowing images */
+    white-space: nowrap;  /* Prevents wrapping */
+}
+
+.app-icons {
+    position: relative;  /* Change to relative */
+    margin-top: 20px;  /* Space between sections */
+}
+
+.app-icon-list {
+    display: flex;  /* Make the icons display in a flex container */
+    overflow-x: auto;  /* Horizontal scroll for overflowing icons */
+    gap: 10px;  /* Gap between icons */
+    margin-top: 20px; 
+    height:100px;
+    width:100px;
+}
+
+.sample-videos {
+    position: relative;  /* Change to relative */
+    margin-top: 20px;  /* Space between sections */
+}
+
+.video-list {
+    display: flex;  /* Make the videos display in a flex container */
+    overflow-x: auto;  /* Horizontal scroll for overflowing videos */
+    gap: 10px;  /* Gap between videos */
+}
+
+#deleteappbutton{
+    position:relative;
+    margin-bottom: 40px;
+    margin-left: 600px;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import './primaryButton.css';
-function primaryButton({buttonText}) {
+function PrimaryButton({buttonText}) {
 
     return(
         <div>
@@ -9,4 +9,4 @@ function primaryButton({buttonText}) {
 
     );
 }
-export default primaryButton;
+export default PrimaryButton;

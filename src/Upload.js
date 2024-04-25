@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import Primarybtn from './Components/primaryButton';
+import Primarybtn from './Components/PrimaryButton';
 import { useFormData } from './FormDataContext';
 import Input from './Components/Inputfield';
 import './Upload.css';
@@ -57,7 +57,7 @@ const FileUploadModal = () => {
 
 
   const handleClose = () => {
-    window.location.href = './Home';
+    window.location.href = './Myapps';
   };
 
   const handleApkFileChange = (e) => {
@@ -154,6 +154,14 @@ const FileUploadModal = () => {
       <Input label="Tags"  inputType="text" value={tags} onChange={handleTags} />
       </div>
 
+      <div id="supporturlInput" >
+      <Input label="Supporting URL" inputType="text" value={supportUrl} onChange={handlesupportUrl} />
+      </div>
+
+      <div id="websiteurlInput" >
+      <Input label="Website URL" inputType="text" value={websiteUrl} onChange={handleWebsiteUrl} />
+      </div>
+
       <div >
         <label id="shortDescLabel">Short Description</label>
       <textarea id="shortDesc"  value={appShortDescription} onChange={handleShortDescriptionChange} ></textarea>
@@ -163,16 +171,6 @@ const FileUploadModal = () => {
       <label id="longDescLabel">Long Description</label>
       <textarea id="longDesc" value={appLongDescription} onChange={handleLongDescriptionChange}></textarea>
     </div>
- 
-   
-      <div id="supporturlInput" >
-      <Input label="Supporting URL" inputType="text" value={supportUrl} onChange={handlesupportUrl} />
-      </div>
-
-      <div id="websiteurlInput" >
-      <Input label="Website URL" inputType="text" value={websiteUrl} onChange={handleWebsiteUrl} />
-      </div>
-  
 
     <div id="sampleScreenshotContainer" className="flex flex-col">
     <label>Sample Screenshots:</label>

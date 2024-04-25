@@ -1,6 +1,6 @@
 import React from 'react';
 import './secButton.css';
-function secButton({buttonText}) {
+function SecondaryButton({buttonText}) {
 
     return(
         <div>
@@ -9,4 +9,4 @@ function secButton({buttonText}) {
 
     );
 }
-export default secButton;
+export default SecondaryButton;

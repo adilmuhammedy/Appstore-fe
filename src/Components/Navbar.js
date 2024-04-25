@@ -8,13 +8,7 @@ import logoutimg from '../icons/Logout.png';
 import './Navbar.css';
 
 function Navbar() {
-    const handleHome = () => {
-        window.location.href = '../Home';
-    };
 
-    const handleSettings = () => {
-        window.location.href = '../Metadata';
-    };
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -40,10 +34,6 @@ function Navbar() {
                 <nav>
                     <ul className="flex flex-col ml-5">
                         <li className="flex items-center mb-4">
-                            <img src={homeimg} alt='' className="w-5 h-5 mb-5 ml-1 mr-2" />
-                            <span onClick={handleHome} className="nav-link cursor-pointer">Home</span>
-                        </li>
-                        <li className="flex items-center mb-4">
                             <img src={myappsimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
                             <span onClick={handleMyapps} className="nav-link cursor-pointer">My Apps</span>
                         </li>
@@ -57,7 +47,7 @@ function Navbar() {
                         </li>
                         <li className="flex items-center mb-4">
                             <img src={settingimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span onClick={handleSettings} className="nav-link cursor-pointer">Settings</span>
+                            <span className="nav-link cursor-pointer">Settings</span>
                         </li>
                         <li className="flex items-center mb-4">
                             <img src={logoutimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />

@@ -3,8 +3,8 @@ import axios from 'axios';
 import Navbar from './Components/Navbar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Preview.css';
-import Primarybtn from './Components/primaryButton';
-import Secondarybtn from './Components/secButton';
+import Primarybtn from './Components/PrimaryButton';
+import Secondarybtn from './Components/SecondaryButton';
 
 const Preview = () => {
   const navigate = useNavigate();
@@ -42,24 +42,32 @@ const Preview = () => {
     formData.append('appCategory', appCategory);
     formData.append('tags', tags);
     formData.append('supportUrl', supportUrl);
-    formData.append('websiteUrl', websiteUrl); // Corrected variable name from 'contactUrl' to 'websitetUrl'
-    formData.append('appScreenshots', screenshotfile); // Corrected variable name from 'appscreenshots' to 'appScreenshots'
-    formData.append('appIcons', appiconfile); // Corrected variable name from 'appicons' to 'appIcons'
-    formData.append('appShortDescription', appShortDescription); // Corrected variable name from 'appDescription' to 'appShortDescription'
-    formData.append('appLongDescription', appLongDescription); // Corrected variable name from 'appDescription' to 'appLongDescription'
-    formData.append('appVideo', appVideo);
+    formData.append('websiteUrl', websiteUrl); 
+    screenshotfile.forEach((file, index) => {
+      formData.append(`screenshotfile-${index}`, file);
+    });
     
+    appiconfile.forEach((file, index) => {
+      formData.append(`appiconfile-${index}`, file);
+    });
+    
+    formData.append('appShortDescription', appShortDescription); 
+    formData.append('appLongDescription', appLongDescription); 
+    formData.append('appVideo', appVideo);
 
+for (let pair of formData.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]); 
+}
     try {
       // POST request to upload the file
-      const response = await axios.post('http://localhost:4000/upload', formData, {
+      const response = await axios.post('http://localhost:4000/uploadapp', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
       window.alert('File uploaded successfully:', response.data);
-      window.location.href = './Home';
+      window.location.href = './Myapps';
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400 && error.response.data.error) {

@@ -1,0 +1,49 @@
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure modal is above other elements */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 50px;
+  width:500px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+}
+
+.confirm {
+  margin-right: 80px;
+  margin-bottom: 5px;
+
+
+}
+
+.cancel {
+  margin-right: 10px;
+}
+
+/* Centering the buttons within the modal */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Center the buttons vertically */
+}

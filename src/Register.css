@@ -10,7 +10,7 @@
     left: 400px;
     top: 50px;
     width: 400px;
-    height: 500px;
+    height: 600px;
     border-radius: 10px;
     background-color: rgba(241, 241, 243, 0.705);
 }
@@ -22,68 +22,58 @@
     font-size: larger;
     font-weight:bolder
 }
-#usertext{
+#usernameinput{
     position:absolute;
-    top:150px;
-    left:20px;
+    top:100px;
+    left:80px;
+ 
 }
-#passtext{
+#passwordinput{
     position: absolute;
-    top:200px;
-    left:20px;
+    top:190px;
+    left:80px;
 }
-#confirmpasstxt{
+#confirminput{
     position:absolute;
-    top:250px;
-    left:20px;
+    top:280px;
+    left:80px;
 }
-#regusername {
+#roletext{
     position: absolute;
-    top: 150px;
-    left: 160px;
-    width:200px;
-    height:25px;    
-    border: 0cap;
+    left:80px;
+    top:370px;  
+}
+#role{
+    position: absolute;
+    left:80px;
+    top:400px;
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
-#regpassword{
+#regbtn{
     position: absolute;
-    top: 200px;
-    left: 160px;
-    width:200px;
-    height:25px;    
-    border: 0cap;
+    top:490px;
+    left:240px;
 }
-#confirmPassword {
+#gobackbtn{
     position: absolute;
-    top: 250px;
-    left: 160px;
-    width:200px;
-    height:25px;    
-    border: 0cap;
-}
-#reg-btn{
-    position: absolute;
-    top:350px;
-    left:220px;
-    width:100px;
-    height: 30px;
-    background-color:  rgba(231, 121, 43, 0.7);
-    border: 0cap;
-    border-radius: 5px;
-    cursor: pointer;
-}
-#goback-btn{
-    position: absolute;
-    top:350px;
+    top:490px;
     left:60px;
-    width:80px;
-    height: 30px;
-    background-color:  rgba(231, 121, 43, 0.7);
-    border: 0cap;
-    border-radius: 5px;
-    cursor: pointer;
 }
+#roleerror{
+    position:absolute;
+    top:430px;
+    left:80px;
+}
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+
 
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import allgoimage from './images/Allgoblack.png';
-import PrimaryButton from './Components/primaryButton';
+import PrimaryButton from './Components/PrimaryButton';
 import Input from './Components/Inputfield';
 
 function Login() {
@@ -44,11 +44,12 @@ function Login() {
           localStorage.setItem('token', tokenrecv);
 
           // Redirect to dashboard or perform any other action upon successful login
-          window.location.href = '/Home';
+          window.location.href = '/Myapps';
           window.alert("Login Successful");
         } else {
           const data = await response.json();
           setErrorMessage(data.error || 'An error occurred during login');
+          window.alert(errorMessage);
         }
       } catch (error) {
         console.error('Error during login:', errorMessage);
