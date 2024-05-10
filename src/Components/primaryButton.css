@@ -1,12 +1,13 @@
-#pbtn{
+#pbtn {
     width: 90px;
     padding: 8px;
-    background-color: rgba(231, 121, 43, 0.7);
+    background-color: rgba(231, 121, 43, 0.8);
     color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
 }
-#pbtn:hover{
+
+#pbtn:hover {
     background-color: rgb(0, 0, 0)
 }

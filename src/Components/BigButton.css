@@ -1,0 +1,13 @@
+.bigbtn {
+    width: 150px;
+    padding: 8px;
+    background-color: rgba(43, 99, 231, 0.8);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.bigbtn:hover {
+    background-color: rgb(43, 99, 231);
+}

@@ -118,6 +118,7 @@ const RegistrationPage = () => {
               onChange={handleRoleChange}
               required
             >
+              <option value="">Select</option>
               <option value="developer">Developer</option>
               <option value="tester">Tester</option>
             </select>

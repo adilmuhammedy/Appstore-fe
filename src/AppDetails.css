@@ -3,10 +3,11 @@
     margin-top: 50px;
     margin-left: 300px;
     padding: 20px;
-    overflow: hidden;  /* This will contain the absolute positioned elements */
+    overflow: hidden;
+    /* This will contain the absolute positioned elements */
 }
 
-.app-nametext{
+.app-nametext {
     margin-bottom: 0px;
     color: #333;
     font-size: 40px;
@@ -23,6 +24,7 @@
 .info-label {
     font-weight: bold;
     margin-right: 10px;
+    margin-bottom: 50px;
 }
 
 .app-info p {
@@ -30,39 +32,90 @@
 }
 
 .screenshot-list {
-    position: relative;  /* Change to relative */
-    width: auto;  /* Auto width */
-    overflow-x: auto;  /* Horizontal scroll for overflowing images */
-    white-space: nowrap;  /* Prevents wrapping */
+    position: relative;
+    /* Change to relative */
+    width: auto;
+    /* Auto width */
+    overflow-x: auto;
+    /* Horizontal scroll for overflowing images */
+    white-space: nowrap;
+    /* Prevents wrapping */
 }
 
 .app-icons {
-    position: relative;  /* Change to relative */
-    margin-top: 20px;  /* Space between sections */
+    position: relative;
+    /* Change to relative */
+    margin-top: 20px;
+    /* Space between sections */
 }
 
 .app-icon-list {
-    display: flex;  /* Make the icons display in a flex container */
-    overflow-x: auto;  /* Horizontal scroll for overflowing icons */
-    gap: 10px;  /* Gap between icons */
-    margin-top: 20px; 
-    height:100px;
-    width:100px;
+    display: flex;
+    /* Make the icons display in a flex container */
+    overflow-x: auto;
+    /* Horizontal scroll for overflowing icons */
+    gap: 10px;
+    /* Gap between icons */
+    margin-top: 20px;
+    height: 100px;
+    width: 100px;
 }
 
 .sample-videos {
-    position: relative;  /* Change to relative */
-    margin-top: 20px;  /* Space between sections */
+    position: relative;
+    /* Change to relative */
+    margin-top: 20px;
+    /* Space between sections */
 }
 
 .video-list {
-    display: flex;  /* Make the videos display in a flex container */
-    overflow-x: auto;  /* Horizontal scroll for overflowing videos */
-    gap: 10px;  /* Gap between videos */
+    display: flex;
+    /* Make the videos display in a flex container */
+    overflow-x: auto;
+    /* Horizontal scroll for overflowing videos */
+    gap: 10px;
+    /* Gap between videos */
 }
 
-#deleteappbutton{
-    position:relative;
+
+
+#deleteappbutton {
+    position: absolute;
     margin-bottom: 40px;
     margin-left: 600px;
+}
+
+#editappbutton {
+    margin-left: 400px;
+    /* Adjust this margin as needed */
+    margin-bottom: 40px;
+}
+
+#analysisbtn {
+    position: absolute;
+    margin-left: 400px;
+    margin-bottom: 40px;
+}
+
+#bigbtn {
+    margin-left: 600px;
+    margin-bottom: 40px;
+}
+
+.app-info input {
+    position: absolute;
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+
+}
+
+.eachDetail {
+    margin-bottom: 35px;
+}
+
+.updatebutton {
+    margin-left: 300px;
+    margin-top: 20px;
 }

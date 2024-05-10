@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Navbar from './Components/Navbar';
+import TesterNavbar from './Components/TesterNavbar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Preview.css';
 import Primarybtn from './Components/PrimaryButton';
@@ -10,6 +11,7 @@ const Preview = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const previewData = location.state.previewData;
+  const role=localStorage.getItem('role');
   const {  apkName,
     ageRating,
     appCategory,
@@ -60,7 +62,8 @@ for (let pair of formData.entries()) {
 }
     try {
       // POST request to upload the file
-      const response = await axios.post('http://localhost:4000/uploadapp', formData, {
+      console.log( `formDataaa at preview`, formData);
+      const response = await axios.post('http://localhost:4000/uploadapp/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -89,9 +92,11 @@ for (let pair of formData.entries()) {
   };
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+       <div>
+                {/* Conditional rendering based on the role */}
+                {role === 'developer' && <Navbar />}
+                {role === 'tester' && <TesterNavbar />}
+            </div>
       <div className="popup">
         <div className="popup-content">
           {/* <span className="close" onClick={handleEdit}>&times;</span> */}

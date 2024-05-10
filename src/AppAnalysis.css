@@ -1,0 +1,22 @@
+#analysis-container {
+    max-width: 800px;
+    margin-top: 50px;
+    margin-left: 300px;
+    padding: 20px;
+    overflow: hidden;
+    /* This will contain the absolute positioned elements */
+}
+
+.lists {
+    margin: 10px;
+}
+
+.header {
+    font-size: 30px;
+    margin: 30px;
+
+}
+
+.list-item {
+    margin-bottom: 10px;
+}

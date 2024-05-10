@@ -52,8 +52,8 @@
   
   #login-container input[type="checkbox"] {
     position:absolute;
-    top:202px;
-    left:17px; 
+    top:207px;
+    left:20px; 
   
   }
   #keep-logged-in{
@@ -73,9 +73,7 @@
     left:160px; 
   }
   
-  #login-container button:hover {
-    background-color: rgba(30, 26, 23, 0.7)
-  }
+ 
   
   #login-container a {
     text-decoration: none;

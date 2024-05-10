@@ -37,11 +37,13 @@ function Login() {
         if (response.ok) {
           // console.log(`hi`);
           const data = await response.json();
-          const tokenrecv = data.token;
+          const { token, role } = data;
+          const tokenrecv = token;
           console.log("Token received:", tokenrecv);
-
+          console.log(`Role: `, role);
           // Store the token in localStorage
           localStorage.setItem('token', tokenrecv);
+          localStorage.setItem('role',role);
 
           // Redirect to dashboard or perform any other action upon successful login
           window.location.href = '/Myapps';
@@ -74,13 +76,14 @@ function Login() {
             <label id="keep-logged-in">Keep me logged in</label>
           </div>
           <div>
-            <a href="http://www.google.com" id="forgot">Forgot password?</a>
+            <a href="" id="forgot">Forgot password?</a>
           </div>
           <div id="loginbtn" onClick={handleLogin}>
             <PrimaryButton buttonText="Login" />
           </div>
           <div id="signup-container">
             <p>Don't have an account yet?</p>
+            
             <div id="creatone" onClick={handleCreateOne}>
               <PrimaryButton buttonText="CreateOne" />
             </div>

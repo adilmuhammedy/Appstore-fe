@@ -6,7 +6,7 @@ import settingimg from '../icons/settings.png';
 import logoutimg from '../icons/Logout.png';
 import './Navbar.css';
 
-function Navbar() {
+function TesterNavbar() {
 
 
     useEffect(() => {
@@ -41,10 +41,6 @@ function Navbar() {
                             <span onClick={handleMyapps} className="nav-link cursor-pointer">My Apps</span>
                         </li>
                         <li className="flex items-center mb-4">
-                            <img src={analyticsimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span className="nav-link">Analytics</span>
-                        </li>
-                        <li className="flex items-center mb-4">
                             <img src={profileimg} alt='' className="w-5 h-5  mb-5 ml-1 " />
                             <span onClick={handleProfile} className="nav-link">Profile</span>
                         </li>
@@ -63,4 +59,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default TesterNavbar;
