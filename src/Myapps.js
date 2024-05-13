@@ -7,7 +7,6 @@ import "./Myapps.css";
 import submitIcon from "./icons/Submit_icon.png";
 import PrimaryButton from "./Components/PrimaryButton";
 
-
 function Myapps() {
   const [apps, setApps] = useState([]);
   const role = localStorage.getItem("role");
@@ -16,25 +15,53 @@ function Myapps() {
     navigate("../Upload");
   };
 
-
-
-  const fetchApps = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/applist/getApp");
-      setApps(response.data.apps);
-    } catch (error) {
-      console.error("Error fetching apps:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchApps();
+    async function fetchData() {
+      try {
+        const response = await axios.get("http://localhost:4000/applist/getApp");
+        setApps(response.data.apps);
+        await main();
+      } catch (error) {
+        console.error("Error fetching apps:", error);
+      }
+    }
+    fetchData();
   }, []);
+  const fileToAppIdMap = {};
+  const hashValToAppIdMap = {};
+  async function main() {
+    try {
+      const queueData = await fetchapkfromQueue();
+      // Mapping app id to filename
+      for (let i = 0; i < queueData.filesData.length; i++) {
+        const fileName = queueData.filesData[i];
+        const appId = queueData.appIds[i];
+        fileToAppIdMap[fileName] = appId;
+      }
 
-  // console.log(`hashvalue at myapps:`, hashValToAppIdMap[app_id]);
-  const viewAppDetails = (app_id) => {
-    navigate(`../AppDetails/`, { state: { app_id: app_id, hashValue: hashValToAppIdMap[app_id] } });
-  };
+      for (const file of queueData.filesData) {
+        const serveFileLink = await filetolink(file);
+        const responsefile = await fetch(serveFileLink);
+        const hashVal = await mobsfUpload(new File([await responsefile.blob()], `${file}`));
+        hashValToAppIdMap[fileToAppIdMap[file]] = hashVal;
+        console.log(`hash value of ${fileToAppIdMap[file]}`, hashValToAppIdMap[fileToAppIdMap[file]]);
+        const scanResult = await mobsfScan(hashVal);
+        const jsonReport = await mobsfjsonReport(hashVal);
+        const savejsonReportresponse = await sendjsonReport(jsonReport, fileToAppIdMap[file]);
+        setAppStatus(fileToAppIdMap[file], "Analysed");
+      }
+
+      for (let i = 0; i < queueData.filesData.length; i++) {
+        console.log(`hashvalue of ${fileToAppIdMap[queueData.filesData[i]]}`, hashValToAppIdMap[fileToAppIdMap[queueData.filesData[i]]]);
+      }
+
+      for (let i = 0; i < queueData.filesData.length; i++) {
+        console.log(`file name of ${queueData.filesData[i]}`, fileToAppIdMap[queueData.filesData[i]]);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
   async function fetchapkfromQueue() {
     try {
@@ -42,9 +69,7 @@ function Myapps() {
       if (!response.ok) {
         throw new Error("Failed to fetch queue data");
       }
-      const queueData = await response.json();
-      // Process the received queue data here
-      return queueData;
+      return await response.json();
     } catch (error) {
       console.error("Error fetching queue data:", error);
       // Handle error
@@ -61,43 +86,6 @@ function Myapps() {
       throw error;
     }
   }
-  const fileToAppIdMap = {};
-  const hashValToAppIdMap = {};
-  async function main() {
-    try {
-      const queueData = await fetchapkfromQueue();
-      //mapping app id to filename
-      // console.log(queueData);
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        const fileName = queueData.filesData[i];
-        const appId = queueData.appIds[i];
-        fileToAppIdMap[fileName] = appId;
-      }
-      for (const file of queueData.filesData) {
-        const serveFileLink = await filetolink(file);
-        const responsefile = await fetch(serveFileLink);
-        const hashVal = await mobsfUpload(new File([await responsefile.blob()], `${file}`));
-        hashValToAppIdMap[fileToAppIdMap[file]] = hashVal;
-        // console.log(`hashvalllll of ${fileToAppIdMap[file]} `, hashVal);
-        const scanResult = await mobsfScan(hashVal);
-        // console.log(`scanresult`, scanResult);
-        const jsonReport = await mobsfjsonReport(hashVal);
-        const savejsonReportresponse = await sendjsonReport(jsonReport, fileToAppIdMap[file]);
-        // console.log(`report`, savejsonReportresponse);
-        // console.log(savejsonReportresponse);
-      }
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        console.log(`hashvalue of ${fileToAppIdMap[queueData.filesData[i]]}`, hashValToAppIdMap[fileToAppIdMap[queueData.filesData[i]]]);
-      }
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        console.log(`file name of ${queueData.filesData[i]}`, fileToAppIdMap[queueData.filesData[i]]);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-  main();
-
 
   async function sendjsonReport(jsonReport, app_id) {
     const data = {
@@ -112,7 +100,7 @@ function Myapps() {
     }
   }
 
-  //mobsf api calls
+  // Mobsf API calls
 
   async function mobsfUpload(file) {
     const formData = new FormData();
@@ -124,17 +112,14 @@ function Myapps() {
           "Content-Type": `multipart/form-data`,
         },
       });
-      if (response.status != 200) {
+      if (response.status !== 200) {
         throw new Error("Failed to send file");
       }
-      // console.log(" Upload Response from backend:", response.data);
       return response.data.hash;
-
     } catch (error) {
       console.error("Error sending file names:", error);
     }
   }
-
 
   async function mobsfScan(hashValue) {
     const formData = new FormData();
@@ -146,10 +131,9 @@ function Myapps() {
           "Content-Type": `multipart/form-data`,
         },
       });
-      if (response.status != 200) {
+      if (response.status !== 200) {
         throw new Error("Failed to scan the file");
       }
-      // console.log(response.data)
       return response.data;
     } catch (error) {
       console.error("Error scanning file:", error);
@@ -166,14 +150,29 @@ function Myapps() {
           "Content-Type": `multipart/form-data`,
         },
       });
-      if (response.status != 200) {
-        throw new Error("Failed to geenrate the json report");
+      if (response.status !== 200) {
+        throw new Error("Failed to generate the JSON report");
       }
       return response.data;
     } catch (error) {
-      console.error("Error generating json report:", error);
+      console.error("Error generating JSON report:", error);
     }
   }
+
+  function setAppStatus(appId, status) {
+    setApps(prevApps => {
+      return prevApps.map(app => {
+        if (app.app_id === appId) {
+          return { ...app, status };
+        }
+        return app;
+      });
+    });
+  }
+
+  const viewAppDetails = (app_id) => {
+    navigate(`../AppDetails/`, { state: { app_id: app_id, hashValue: hashValToAppIdMap[app_id] } });
+  };
 
   return (
     <div className="myapps-bg">
@@ -215,6 +214,5 @@ function Myapps() {
     </div>
   );
 }
-
 
 export default Myapps;

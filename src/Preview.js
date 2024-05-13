@@ -11,8 +11,8 @@ const Preview = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const previewData = location.state.previewData;
-  const role=localStorage.getItem('role');
-  const {  apkName,
+  const role = localStorage.getItem('role');
+  const { apkName,
     ageRating,
     appCategory,
     tags,
@@ -44,30 +44,31 @@ const Preview = () => {
     formData.append('appCategory', appCategory);
     formData.append('tags', tags);
     formData.append('supportUrl', supportUrl);
-    formData.append('websiteUrl', websiteUrl); 
+    formData.append('websiteUrl', websiteUrl);
     screenshotfile.forEach((file, index) => {
       formData.append(`screenshotfile-${index}`, file);
     });
-    
+
     appiconfile.forEach((file, index) => {
       formData.append(`appiconfile-${index}`, file);
     });
-    
-    formData.append('appShortDescription', appShortDescription); 
-    formData.append('appLongDescription', appLongDescription); 
+
+    formData.append('appShortDescription', appShortDescription);
+    formData.append('appLongDescription', appLongDescription);
     formData.append('appVideo', appVideo);
 
-for (let pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]); 
-}
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
     try {
       // POST request to upload the file
-      console.log( `formDataaa at preview`, formData);
+      console.log(`formDataaa at preview`, formData);
       const response = await axios.post('http://localhost:4000/uploadapp/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+      console.log('done');
 
       window.alert('File uploaded successfully:', response.data);
       window.location.href = './Myapps';
@@ -92,58 +93,58 @@ for (let pair of formData.entries()) {
   };
   return (
     <div>
-       <div>
-                {/* Conditional rendering based on the role */}
-                {role === 'developer' && <Navbar />}
-                {role === 'tester' && <TesterNavbar />}
-            </div>
+      <div>
+        {/* Conditional rendering based on the role */}
+        {role === 'developer' && <Navbar />}
+        {role === 'tester' && <TesterNavbar />}
+      </div>
       <div className="popup">
         <div className="popup-content">
           {/* <span className="close" onClick={handleEdit}>&times;</span> */}
           <h1 className='previewtxt'>Preview</h1>
           <label id="appnamepr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>App name:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{apkName}</span>
-</label>
+            <span style={{ fontWeight: 'bolder' }}>App name:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{apkName}</span>
+          </label>
 
-<label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Age Rating:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{ageRating}</span>
-</label>
+          <label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Age Rating:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{ageRating}</span>
+          </label>
 
-<label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Category:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{appCategory}</span>
-</label>
+          <label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Category:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{appCategory}</span>
+          </label>
 
-<label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Tags:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{tags}</span>
-</label>
+          <label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Tags:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{tags}</span>
+          </label>
 
-<label id="appdescpr" className="block text-sm left-10 font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Short description:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{appShortDescription}</span>
-</label>
+          <label id="appdescpr" className="block text-sm left-10 font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Short description:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{appShortDescription}</span>
+          </label>
 
-<label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Long Description:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{appLongDescription}</span>
-</label>
+          <label id="appversionpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Long Description:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{appLongDescription}</span>
+          </label>
 
-<label id="supporturlpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Support URL:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{supportUrl}</span>
-</label>
+          <label id="supporturlpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Support URL:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{supportUrl}</span>
+          </label>
 
-<label id="contacturlpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Website URL:</span><br />
-  <span style={{ fontWeight: 'lighter' }}>{websiteUrl}</span>
-</label>
+          <label id="contacturlpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Website URL:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{websiteUrl}</span>
+          </label>
 
-<label id="screenshotpr" className="block text-sm font-medium leading-6 text-gray-900">
-  <span style={{ fontWeight: 'bolder' }}>Sample Screenshots:</span>
-</label>
+          <label id="screenshotpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Sample Screenshots:</span>
+          </label>
 
           {screenshotfile.map((file, index) => (
             <img key={index} src={URL.createObjectURL(file)} alt={`Screenshot ${index}`} />

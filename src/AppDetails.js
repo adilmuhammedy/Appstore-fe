@@ -7,13 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import './AppDetails.css';  // Assuming you'll have some styles here
 import PrimaryButton from './Components/PrimaryButton';
 import ConfirmationModal from './Components/ConfirmationModal';
-import EditModal from './Components/EditModal';
 import BigButton from './Components/BigButton';
 
 function AppDetails() {
     const location = useLocation();
-    const { app_id, hashValue } = location.state || {};;
-    console.log(`location state`, location.state)
+    const { app_id, hashValue } = location.state || {};
     const [appDetails, setAppDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [screenshots, setScreenshots] = useState([]);
@@ -22,119 +20,17 @@ function AppDetails() {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false); // State for the edit modal
     const role = localStorage.getItem('role');
-
     const navigate = useNavigate();
-    const handleDelete = async () => {
-        try {
-            // Make an API call to delete the apk details
-            console.log(`app id=`, app_id);
-            const response = await fetch(`http://localhost:4000/applist/deleteApp?app_id=${app_id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log('Apk details deleted successfully:', data);
-                // Close the confirmation modal
-                setIsConfirmModalOpen(false);
-                navigate('../Myapps');
-            } else {
-                console.error('Errorrrr deleting apk details:', data);
-                // Handle error and display an error message to the user
-            }
-        } catch (error) {
-            console.error('Error deleting apk details:', error);
-            // Handle error and display an error message to the user
-        }
-    };
-
-    const handleEdit = () => {
-        setIsEditMode(true);
-    }
-
-    const handleUpdate = async () => {
-        try {
-            // Destructure app_id from appDetails
-            const { app_id, ...updatedDetails } = appDetails;
-            console.log(`updated details`, updatedDetails);
-
-            const response = await fetch(`http://localhost:4000/uploadapp/edit`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ app_id, ...updatedDetails }), // Include both app_id and updatedDetails
-            });
-
-            if (response.ok) {
-                window.alert('App details updated successfully');
-                navigate('../Myapps');
-                // Optionally, you can perform additional actions after the update
-            } else {
-                console.error('Failed to update app details');
-                // Handle error
-            }
-        } catch (error) {
-            console.error('Error updating app details:', error);
-            // Handle error
-        }
-    };
-
-    const gotoAnalysisPage = () => {
-        navigate('../AppAnalysis', { state: { app_id: app_id } });
-    }
-    async function mobsfpdfReport(hashValue) {
-        console.log(`sending req to generate pdf`);
-        const formData = new FormData();
-        formData.append('hash', hashValue);
-        try {
-            const response = await axios.post("http://localhost:8000/api/v1/download_pdf", formData, {
-                headers: {
-                    Authorization: `helo@123`,
-                    "Content-Type": `multipart/form-data`,
-                },
-                responseType: 'blob', // Set response type to blob to receive binary data
-            });
-            if (response.status !== 200) {
-                throw new Error("Failed to generate the pdf report");
-            }
-
-            // Create an anchor element for downloading the file
-            const a = document.createElement('a');
-            // Set the Blob object as the href
-            a.href = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-            a.download = 'report.pdf'; // Set the filename for the downloaded file
-            // Append the anchor element to the document body and trigger the click event
-            document.body.appendChild(a);
-            a.click();
-            // Clean up by removing the anchor element
-            document.body.removeChild(a);
-        } catch (error) {
-            console.error("Error generating pdf report:", error);
-        }
-    }
-
-
-
-
-
-
 
     useEffect(() => {
         const fetchAppDetails = async () => {
+            if (!app_id) return;
             try {
-
                 const response = await axios.get(`http://localhost:4000/app/${app_id}`);
                 setAppDetails(response.data);
                 setLoading(false);
 
-                // Fetch filenames of screenshots, app icons, and sample videos
                 const screenshotsResponse = await axios.get(`http://localhost:4000/app/${app_id}/screenshots`);
-                console.log(`screenshotsResponse`, screenshotsResponse);
                 setScreenshots(screenshotsResponse.data);
 
                 const appIconsResponse = await axios.get(`http://localhost:4000/app/${app_id}/appicons`);
@@ -149,44 +45,112 @@ function AppDetails() {
         };
 
         fetchAppDetails();
-
     }, [app_id]);
 
-    // const pdfresponse = mobsfpdfReport(hashValue);
-    // console.log(pdfresponse);
-    if (loading) {
-        return <div>Loading...</div>;  // Placeholder for when app details are being fetched
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/applist/deleteApp?app_id=${app_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Apk details deleted successfully:', data);
+                setIsConfirmModalOpen(false);
+                navigate('../Myapps');
+            } else {
+                console.error('Error deleting apk details:', data);
+            }
+        } catch (error) {
+            console.error('Error deleting apk details:', error);
+        }
+    };
+
+    const handleEdit = () => {
+        setIsEditMode(true);
     }
 
+    const handleUpdate = async () => {
+        try {
+            const { app_id, ...updatedDetails } = appDetails;
+            const response = await fetch(`http://localhost:4000/uploadapp/edit`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ app_id, ...updatedDetails }),
+            });
+
+            if (response.ok) {
+                window.alert('App details updated successfully');
+                navigate('../Myapps');
+            } else {
+                console.error('Failed to update app details');
+            }
+        } catch (error) {
+            console.error('Error updating app details:', error);
+        }
+    };
+
+    const gotoAnalysisPage = () => {
+        navigate('../AppAnalysis', { state: { app_id: app_id } });
+    }
+
+    const mobsfpdfReport = async (hashValue) => {
+        const formData = new FormData();
+        formData.append('hash', hashValue);
+        try {
+            const response = await axios.post("http://localhost:8000/api/v1/download_pdf", formData, {
+                headers: {
+                    Authorization: `helo@123`,
+                    "Content-Type": `multipart/form-data`,
+                },
+                responseType: 'blob',
+            });
+            if (response.status !== 200) {
+                throw new Error("Failed to generate the pdf report");
+            }
+
+            const a = document.createElement('a');
+            a.href = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+            a.download = 'report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error("Error generating pdf report:", error);
+        }
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="app-details-bg">
             <div>
-                {/* Conditional rendering based on the role */}
                 {role === 'developer' && <Navbar />}
                 {role === 'tester' && <TesterNavbar />}
             </div>
-
             <div className="app-details-container">
-
                 <ConfirmationModal
                     isOpen={isConfirmModalOpen}
                     onClose={() => setIsConfirmModalOpen(false)}
                     onConfirm={handleDelete}
                 />
-
-
-
                 <h1 className="app-nametext">{appDetails.appname}</h1>
                 {role === "developer" &&
                     <div id="buttoncontaner">
-                        <div id="deleteappbutton" onClick={() => setIsConfirmModalOpen(true)} >
+                        <div id="deleteappbutton" onClick={() => setIsConfirmModalOpen(true)}>
                             <PrimaryButton buttonText="Delete" />
                         </div>
                         <div id="editappbutton" onClick={() => handleEdit()}>
                             <PrimaryButton buttonText="Edit" />
                         </div>
-
                     </div>
                 }
                 {role === "tester" &&
@@ -197,13 +161,10 @@ function AppDetails() {
                         <div id="bigbtn" onClick={() => mobsfpdfReport(hashValue)} >
                             <BigButton buttonText="Download Report" />
                         </div>
-                        {/* <div id="editappbutton" onClick={() => handleEdit()}>
-                            <PrimaryButton buttonText="Edit" />
-                        </div> */}
-
                     </div>
                 }
                 <div className="app-info">
+                    {/* Render app details here */}
                     <div className='eachDetail'>
 
                         <span className="info-label">App Name:</span>
@@ -366,6 +327,7 @@ function AppDetails() {
 
             </div>
         </div>
+
     );
 }
 
