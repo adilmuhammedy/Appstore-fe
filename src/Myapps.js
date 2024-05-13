@@ -5,9 +5,12 @@ import Navbar from "./Components/Navbar";
 import TesterNavbar from "./Components/TesterNavbar";
 import "./Myapps.css";
 import submitIcon from "./icons/Submit_icon.png";
+import analysisIcon from "./icons/analysis_icon.png";
 import PrimaryButton from "./Components/PrimaryButton";
 
 function Myapps() {
+  const fileToAppIdMap = {};
+  const hashValToAppIdMap = {};
   const [apps, setApps] = useState([]);
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
@@ -27,11 +30,11 @@ function Myapps() {
     }
     fetchData();
   }, []);
-  const fileToAppIdMap = {};
-  const hashValToAppIdMap = {};
+
   async function main() {
     try {
       const queueData = await fetchapkfromQueue();
+      // console.log(queueData);
       // Mapping app id to filename
       for (let i = 0; i < queueData.filesData.length; i++) {
         const fileName = queueData.filesData[i];
@@ -43,12 +46,14 @@ function Myapps() {
         const serveFileLink = await filetolink(file);
         const responsefile = await fetch(serveFileLink);
         const hashVal = await mobsfUpload(new File([await responsefile.blob()], `${file}`));
+        // console.log(hashVal);
+        const hashvalresp = await sendhashvalue(hashVal, fileToAppIdMap[file]);
+        // console.log(`hashvalresp `, hashvalresp);
         hashValToAppIdMap[fileToAppIdMap[file]] = hashVal;
-        console.log(`hash value of ${fileToAppIdMap[file]}`, hashValToAppIdMap[fileToAppIdMap[file]]);
+        // console.log(`hash value of ${fileToAppIdMap[file]}`, hashValToAppIdMap[fileToAppIdMap[file]]);
         const scanResult = await mobsfScan(hashVal);
         const jsonReport = await mobsfjsonReport(hashVal);
         const savejsonReportresponse = await sendjsonReport(jsonReport, fileToAppIdMap[file]);
-        setAppStatus(fileToAppIdMap[file], "Analysed");
       }
 
       for (let i = 0; i < queueData.filesData.length; i++) {
@@ -88,12 +93,27 @@ function Myapps() {
   }
 
   async function sendjsonReport(jsonReport, app_id) {
+
     const data = {
       jsonReport,
       app_id
     };
+    console.log(jsonReport);
     try {
       const response = await axios.post("http://localhost:4000/save/savejson", data);
+      return response.data; // Assuming you want to return data from the backend
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async function sendhashvalue(hashvalue, app_id) {
+
+    const data = {
+      hashvalue,
+      app_id
+    };
+    try {
+      const response = await axios.post("http://localhost:4000/save/savehashvalue", data);
       return response.data; // Assuming you want to return data from the backend
     } catch (error) {
       throw new Error(error);
@@ -159,16 +179,9 @@ function Myapps() {
     }
   }
 
-  function setAppStatus(appId, status) {
-    setApps(prevApps => {
-      return prevApps.map(app => {
-        if (app.app_id === appId) {
-          return { ...app, status };
-        }
-        return app;
-      });
-    });
-  }
+
+
+
 
   const viewAppDetails = (app_id) => {
     navigate(`../AppDetails/`, { state: { app_id: app_id, hashValue: hashValToAppIdMap[app_id] } });
@@ -206,6 +219,9 @@ function Myapps() {
               <p className="app-status">Status: {app.status}</p>
               {app.status === "Submitted" ? (
                 <img src={submitIcon} id="submit_icon" alt="Submit Icon" />
+              ) : null}
+              {app.status === "Analyzed" ? (
+                <img src={analysisIcon} id="submit_icon" alt="Submit Icon" />
               ) : null}
             </div>
           ))}

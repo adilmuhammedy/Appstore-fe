@@ -4,14 +4,13 @@ import axios from 'axios';
 import Navbar from './Components/Navbar';
 import TesterNavbar from './Components/TesterNavbar';
 import { useNavigate } from 'react-router-dom';
-import './AppDetails.css';  // Assuming you'll have some styles here
+import './AppDetails.css'; // Assuming you'll have some styles here
 import PrimaryButton from './Components/PrimaryButton';
 import ConfirmationModal from './Components/ConfirmationModal';
 import BigButton from './Components/BigButton';
 
 function AppDetails() {
     const location = useLocation();
-    const { app_id, hashValue } = location.state || {};
     const [appDetails, setAppDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [screenshots, setScreenshots] = useState([]);
@@ -19,8 +18,11 @@ function AppDetails() {
     const [sampleVideos, setSampleVideos] = useState([]);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false); // State for the edit modal
+    const [hashValue, setHashValue] = useState('');
     const role = localStorage.getItem('role');
     const navigate = useNavigate();
+
+    const { app_id } = location.state || {};
 
     useEffect(() => {
         const fetchAppDetails = async () => {
@@ -38,6 +40,8 @@ function AppDetails() {
 
                 const sampleVideosResponse = await axios.get(`http://localhost:4000/app/${app_id}/samplevideos`);
                 setSampleVideos(sampleVideosResponse.data);
+
+                // Fetch hash value after app details are fetched
             } catch (error) {
                 console.error('Error fetching app details:', error);
                 setLoading(false);
@@ -45,7 +49,27 @@ function AppDetails() {
         };
 
         fetchAppDetails();
-    }, [app_id]);
+    }, [app_id]); // Dependency on app_id
+
+    const fetchHashValue = async (app_id) => {
+        try {
+            const response = await axios.get('http://localhost:4000/save/retrievehashvalue', {
+                params: {
+                    app_id: app_id
+                }
+            });
+
+            if (response.status === 200) {
+                const hashValue = response.data.hashValue;
+                // console.log(hashValue);
+                setHashValue(hashValue);
+            }
+        } catch (error) {
+            console.error('Error retrieving hash value:', error);
+        }
+    };
+    fetchHashValue(app_id);
+    console.log(`hehe`, hashValue)
 
     const handleDelete = async () => {
         try {
@@ -72,7 +96,7 @@ function AppDetails() {
 
     const handleEdit = () => {
         setIsEditMode(true);
-    }
+    };
 
     const handleUpdate = async () => {
         try {
@@ -98,7 +122,7 @@ function AppDetails() {
 
     const gotoAnalysisPage = () => {
         navigate('../AppAnalysis', { state: { app_id: app_id } });
-    }
+    };
 
     const mobsfpdfReport = async (hashValue) => {
         const formData = new FormData();
@@ -124,7 +148,7 @@ function AppDetails() {
         } catch (error) {
             console.error("Error generating pdf report:", error);
         }
-    }
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -164,7 +188,6 @@ function AppDetails() {
                     </div>
                 }
                 <div className="app-info">
-                    {/* Render app details here */}
                     <div className='eachDetail'>
 
                         <span className="info-label">App Name:</span>
