@@ -190,7 +190,7 @@ function AppDetails() {
                 <div className="app-info">
                     <div className='eachDetail'>
 
-                        <span className="info-label">App Name:</span>
+                        <span className="info-label">App Name</span><br></br>
                         {isEditMode ? (
                             <input
                                 type="text"
@@ -202,7 +202,7 @@ function AppDetails() {
                         )}
                     </div>
                     <div className='eachDetail'>
-                        <span className="info-label">Category:</span>
+                        <span className="info-label">Category</span><br></br>
                         {isEditMode ? (
                             <select id="categorySelect"
                                 value={appDetails.category_id}
@@ -220,7 +220,7 @@ function AppDetails() {
                     </div>
 
                     <div className='eachDetail'>
-                        <span className="info-label">Age Rating:</span>
+                        <span className="info-label">Age Rating</span><br></br>
                         {isEditMode ? (
                             <select id="categorySelect"
                                 value={appDetails.age_rating_id}
@@ -239,7 +239,7 @@ function AppDetails() {
 
 
                     <div className='eachDetail'>
-                        <span className="info-label">Short Description:</span>
+                        <span className="info-label">Short Description</span><br></br>
                         {isEditMode ? (
                             <textarea style={{
                                 width: '300px', height: '100px', border: '1px solid #ccc',
@@ -253,45 +253,47 @@ function AppDetails() {
                             <span>{appDetails.short_description}</span>
                         )}
                     </div>
-                    <div className='eachDetail'>
-                        <span className="info-label">Long Description:</span>
-                        {isEditMode ? (
-                            <textarea style={{
-                                width: '300px', height: '150px', border: '1px solid #ccc',
-                                borderRadius: '3px',
-                            }}
-                                type="text"
-                                value={appDetails.long_description}
-                                onChange={(e) => setAppDetails({ ...appDetails, long_description: e.target.value })}
-                            />
-                        ) : (
-                            <span>{appDetails.long_description}</span>
-                        )}
-                    </div>
-                    <div className='eachDetail'>
-                        <span className="info-label">Support URL:</span>
-                        {isEditMode ? (
-                            <input
-                                type="text"
-                                value={appDetails.support_url}
-                                onChange={(e) => setAppDetails({ ...appDetails, support_url: e.target.value })}
-                            />
-                        ) : (
-                            <a href={appDetails.support_url} target="_blank" rel="noopener noreferrer">{appDetails.support_url}</a>
-                        )}
-                    </div>
-                    <div className='eachDetail'>
-                        <span className="info-label">Website URL:</span>
-                        {isEditMode ? (
-                            <input
-                                type="text"
-                                value={appDetails.website_url}
-                                onChange={(e) => setAppDetails({ ...appDetails, website_url: e.target.value })}
-                            />
-                        ) : (
-                            <a href={appDetails.website_url} target="_blank" rel="noopener noreferrer">{appDetails.website_url}</a>
-                        )}
+                    <div className='rhs'>
+                        <div className='eachDetail'>
+                            <span className="info-label">Long Description</span><br></br>
+                            {isEditMode ? (
+                                <textarea style={{
+                                    width: '300px', height: '150px', border: '1px solid #ccc',
+                                    borderRadius: '3px',
+                                }}
+                                    type="text"
+                                    value={appDetails.long_description}
+                                    onChange={(e) => setAppDetails({ ...appDetails, long_description: e.target.value })}
+                                />
+                            ) : (
+                                <span>{appDetails.long_description}</span>
+                            )}
+                        </div>
+                        <div className='eachDetail'>
+                            <span className="info-label">Support URL:</span>
+                            {isEditMode ? (
+                                <input
+                                    type="text"
+                                    value={appDetails.support_url}
+                                    onChange={(e) => setAppDetails({ ...appDetails, support_url: e.target.value })}
+                                />
+                            ) : (
+                                <a href={appDetails.support_url} target="_blank" rel="noopener noreferrer">{appDetails.support_url}</a>
+                            )}
+                        </div>
+                        <div className='eachDetail'>
+                            <span className="info-label">Website URL:</span>
+                            {isEditMode ? (
+                                <input
+                                    type="text"
+                                    value={appDetails.website_url}
+                                    onChange={(e) => setAppDetails({ ...appDetails, website_url: e.target.value })}
+                                />
+                            ) : (
+                                <a href={appDetails.website_url} target="_blank" rel="noopener noreferrer">{appDetails.website_url}</a>
+                            )}
 
+                        </div>
                     </div>
                     <br />
 

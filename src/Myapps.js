@@ -19,6 +19,7 @@ function Myapps() {
   };
 
   useEffect(() => {
+
     async function fetchData() {
       try {
         const response = await axios.get("http://localhost:4000/applist/getApp");
@@ -45,6 +46,7 @@ function Myapps() {
       for (const file of queueData.filesData) {
         const serveFileLink = await filetolink(file);
         const responsefile = await fetch(serveFileLink);
+        // console.log(responsefile);
         const hashVal = await mobsfUpload(new File([await responsefile.blob()], `${file}`));
         // console.log(hashVal);
         const hashvalresp = await sendhashvalue(hashVal, fileToAppIdMap[file]);
@@ -53,16 +55,17 @@ function Myapps() {
         // console.log(`hash value of ${fileToAppIdMap[file]}`, hashValToAppIdMap[fileToAppIdMap[file]]);
         const scanResult = await mobsfScan(hashVal);
         const jsonReport = await mobsfjsonReport(hashVal);
+        // console.log(`json report  of ${fileToAppIdMap[file]}`, jsonReport);
         const savejsonReportresponse = await sendjsonReport(jsonReport, fileToAppIdMap[file]);
       }
 
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        console.log(`hashvalue of ${fileToAppIdMap[queueData.filesData[i]]}`, hashValToAppIdMap[fileToAppIdMap[queueData.filesData[i]]]);
-      }
+      // for (let i = 0; i < queueData.filesData.length; i++) {
+      //   console.log(`hashvalue of ${fileToAppIdMap[queueData.filesData[i]]}`, hashValToAppIdMap[fileToAppIdMap[queueData.filesData[i]]]);
+      // }
 
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        console.log(`file name of ${queueData.filesData[i]}`, fileToAppIdMap[queueData.filesData[i]]);
-      }
+      // for (let i = 0; i < queueData.filesData.length; i++) {
+      //   console.log(`file name of ${queueData.filesData[i]}`, fileToAppIdMap[queueData.filesData[i]]);
+      // }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -98,7 +101,7 @@ function Myapps() {
       jsonReport,
       app_id
     };
-    console.log(jsonReport);
+    // console.log(jsonReport);
     try {
       const response = await axios.post("http://localhost:4000/save/savejson", data);
       return response.data; // Assuming you want to return data from the backend
@@ -188,7 +191,9 @@ function Myapps() {
   };
 
   return (
+
     <div className="myapps-bg">
+
       <div>
         {/* Conditional rendering based on the role */}
         {role === "developer" && <Navbar />}
@@ -199,7 +204,10 @@ function Myapps() {
           <PrimaryButton buttonText="New App" />
         </div>
       )}
+
       <div className="app-container">
+
+
         <div className="header-section mb-8 m-8">
           <h1 className="text-3xl font-bold text-gray-800">MyApps</h1>
           <p className="text-base text-gray-600">

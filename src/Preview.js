@@ -70,6 +70,7 @@ const Preview = () => {
       });
       console.log('done');
 
+
       window.alert('File uploaded successfully:', response.data);
       window.location.href = './Myapps';
     } catch (error) {
