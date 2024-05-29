@@ -63,6 +63,10 @@ const RegistrationPage = () => {
       setConfirmPasswordError('Passwords do not match');
       return;
     }
+    if (!role) {
+      setRoleError("No role selected")
+      return
+    }
 
 
     try {
@@ -79,16 +83,16 @@ const RegistrationPage = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
-        window.alert(`Registration Success\nUser: ${data.user.username}\nMessage: ${data.message}`);
+        window.alert(`Registration Success\nMessage: ${data.message}`);
         window.location.href = '/';
       } else {
         window.alert(`Registration failed\nError: ${data.error}`);
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      window.alert('Error during registration');
+      window.alert('Error during registration', error);
     }
   };
 
@@ -122,7 +126,7 @@ const RegistrationPage = () => {
               <option value="developer">Developer</option>
               <option value="tester">Tester</option>
             </select>
-            {roleError && <span  className="error">{roleError}</span>}
+            {roleError && <span className="error">{roleError}</span>}
           </div>
           <div id="regbtn" onClick={handleSubmit}>
             <PrimaryButton buttonText="Register" />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from './Components/Navbar';
 import TesterNavbar from './Components/TesterNavbar';
@@ -6,12 +6,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Preview.css';
 import Primarybtn from './Components/PrimaryButton';
 import Secondarybtn from './Components/SecondaryButton';
-
+import Loading from './Components/FoursquareLoading';
+import { SnackbarProvider, useSnackbar } from 'notistack'
 const Preview = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const previewData = location.state.previewData;
   const role = localStorage.getItem('role');
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { apkName,
     ageRating,
     appCategory,
@@ -20,10 +23,12 @@ const Preview = () => {
     appLongDescription,
     supportUrl,
     websiteUrl,
-    appVideo,
-    screenshotfile,
-    appiconfile,
+    price,
+    videoFile,
+    screenshotFile,
+    iconFile,
     apkFile } = previewData;
+  console.log(previewData);
 
   const handleEdit = () => {
     console.log("clicked");
@@ -31,7 +36,7 @@ const Preview = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     if (!apkFile) {
       console.error('No file selected');
       return;
@@ -45,34 +50,32 @@ const Preview = () => {
     formData.append('tags', tags);
     formData.append('supportUrl', supportUrl);
     formData.append('websiteUrl', websiteUrl);
-    screenshotfile.forEach((file, index) => {
+    formData.append('price', price);
+    screenshotFile.forEach((file, index) => {
       formData.append(`screenshotfile-${index}`, file);
     });
-
-    appiconfile.forEach((file, index) => {
+    iconFile.forEach((file, index) => {
       formData.append(`appiconfile-${index}`, file);
     });
-
     formData.append('appShortDescription', appShortDescription);
     formData.append('appLongDescription', appLongDescription);
-    formData.append('appVideo', appVideo);
-
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    videoFile.forEach((file, index) => {
+      formData.append(`videoFile-${index}`, file);
+    })
+ 
     try {
       // POST request to upload the file
-      console.log(`formDataaa at preview`, formData);
+      console.log(`formDataaa at previeww`, formData);
       const response = await axios.post('http://localhost:4000/uploadapp/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log('done');
-
-
-      window.alert('File uploaded successfully:', response.data);
-      window.location.href = './Myapps';
+      enqueueSnackbar("App Uploaded successfully",{
+        variant:'success'
+      });
+      navigate('../Myapps');
+      setLoading(false);
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400 && error.response.data.error) {
@@ -99,6 +102,7 @@ const Preview = () => {
         {role === 'developer' && <Navbar />}
         {role === 'tester' && <TesterNavbar />}
       </div>
+      {loading && <Loading />}
       <div className="popup">
         <div className="popup-content">
           {/* <span className="close" onClick={handleEdit}>&times;</span> */}
@@ -142,20 +146,27 @@ const Preview = () => {
             <span style={{ fontWeight: 'bolder' }}>Website URL:</span><br />
             <span style={{ fontWeight: 'lighter' }}>{websiteUrl}</span>
           </label>
+          
+          <label id="contacturlpr" className="block text-sm font-medium leading-6 text-gray-900">
+            <span style={{ fontWeight: 'bolder' }}>Price:</span><br />
+            <span style={{ fontWeight: 'lighter' }}>{price}$</span>
+          </label>
 
           <label id="screenshotpr" className="block text-sm font-medium leading-6 text-gray-900">
             <span style={{ fontWeight: 'bolder' }}>Sample Screenshots:</span>
           </label>
 
-          {screenshotfile.map((file, index) => (
+          {screenshotFile.map((file, index) => (
             <img key={index} src={URL.createObjectURL(file)} alt={`Screenshot ${index}`} />
           ))}
           <br></br>
           <label id="videopr"> Sample Videos: </label>
-          {appVideo && <video controls src={URL.createObjectURL(appVideo)} />}
+          {videoFile.map((file, index) => (
+            <video key={index} controls src={URL.createObjectURL(file)} />
+          ))}
           <br></br>
           <label id="iconpr"> App Icon: </label>
-          {appiconfile.map((file, index) => (
+          {iconFile.map((file, index) => (
             <img key={index} src={URL.createObjectURL(file)} alt={`App Icon ${index}`} />
           ))}
           <br></br>
@@ -167,14 +178,10 @@ const Preview = () => {
               <Primarybtn buttonText="Submit" />
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
-
   )
-
 };
 export default Preview;
 

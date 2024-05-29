@@ -8,8 +8,10 @@ import './Upload.css';
 
 const FileUploadModal = () => {
   const { formData, updateFormData } = useFormData();
-  const [screenshotfile, setscreenshotFile] = useState(formData.screenshotfile || []);
-  const [appiconfile, setappiconFile] = useState(formData.appiconfile || []);
+  const [screenshotFile, setScreenshotFile] = useState(formData.screenshotfile || []);
+  const [iconFile, setAppiconFile] = useState(formData.appiconfile || []);
+  const [videoFile, setVideoFile] = useState(formData.appVideo || null);
+  const [apkFile, setApkFile] = useState(formData.apkFile || null);
   const [apkName, setApkName] = useState(formData.apkName || '');
   const [ageRating, setAgeRating] = useState(formData.ageRating || '');
   const [appCategory, setCategory] = useState(formData.appCategory || '');
@@ -18,10 +20,10 @@ const FileUploadModal = () => {
   const [appLongDescription, setLongDescription] = useState(formData.appLongDescription || '');
   const [supportUrl, setSupportURL] = useState(formData.supportUrl || '');
   const [websiteUrl, setWebsiteURL] = useState(formData.websiteUrl || '');
-  const [appVideo, setAppVideo] = useState(formData.appVideo || null);
-  const [apkFile, setApkFile] = useState(formData.apkFile || null);
-  const navigate = useNavigate();
+  const [price, setPrice] = useState(formData.price || '');
 
+
+  const navigate = useNavigate();
   useEffect(() => {
     updateFormData({
 
@@ -33,9 +35,10 @@ const FileUploadModal = () => {
       appLongDescription,
       supportUrl,
       websiteUrl,
-      appVideo,
-      screenshotfile,
-      appiconfile,
+      price,
+      videoFile,
+      screenshotFile,
+      iconFile,
       apkFile,
     });
   }, [
@@ -47,9 +50,10 @@ const FileUploadModal = () => {
     appLongDescription,
     supportUrl,
     websiteUrl,
-    appVideo,
-    screenshotfile,
-    appiconfile,
+    price,
+    videoFile,
+    screenshotFile,
+    iconFile,
     apkFile,
     updateFormData
   ]);
@@ -67,19 +71,36 @@ const FileUploadModal = () => {
 
 
   const handlevideoFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setAppVideo(selectedFile);
+    const selectedFiles = e.target.files;
+    const renamedFiles = Array.from(selectedFiles).map((file, index) => {
+      const fileType = file.type.split('/')[0]; // Determine the file type (e.g., image, video, application)
+      const newFileName = `video${index}${fileType}_${Date.now()}_${file.name}`; // Generate a new name for the file
+      return new File([file], newFileName, { type: file.type });
+    });
+    setVideoFile(renamedFiles);
   };
 
   const handlescreenshotFileChange = (e) => {
-    const screenshotfile = Array.from(e.target.files);
-    setscreenshotFile(screenshotfile);
+    const selectedFiles = e.target.files;
+    const renamedFiles = Array.from(selectedFiles).map((file, index) => {
+      const fileType = file.type.split('/')[0]; // Determine the file type (e.g., image, video, application)
+      const newFileName = `screenshot${index}${fileType}_${Date.now()}_${file.name}`; // Generate a new name for the file
+      return new File([file], newFileName, { type: file.type });
+    });
+    setScreenshotFile(renamedFiles);
+
   };
 
 
   const handleappiconFileChange = (e) => {
-    const selectedFile = Array.from(e.target.files);
-    setappiconFile(selectedFile);
+    const selectedFiles = e.target.files;
+    const renamedFiles = Array.from(selectedFiles).map((file, index) => {
+      const fileType = file.type.split('/')[0]; // Determine the file type (e.g., image, video, application)
+      const newFileName = `appicon${index}${fileType}_${Date.now()}_${file.name}`; // Generate a new name for the file
+      return new File([file], newFileName, { type: file.type });
+    });
+    setAppiconFile(renamedFiles);
+
   };
 
   const handleApkNameChange = (e) => {
@@ -106,6 +127,9 @@ const FileUploadModal = () => {
   const handleLongDescriptionChange = (e) => {
     setLongDescription(e.target.value);
   };
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
+  };
 
   const handlePreview = async () => {
     const previewData = {
@@ -117,9 +141,10 @@ const FileUploadModal = () => {
       appLongDescription,
       supportUrl,
       websiteUrl,
-      appVideo,
-      screenshotfile,
-      appiconfile,
+      price,
+      videoFile,
+      screenshotFile,
+      iconFile,
       apkFile
     };
 
@@ -143,7 +168,7 @@ const FileUploadModal = () => {
           </div>
 
           <div id="ageRating">
-          <label id="Category">Age Rating</label><br></br>
+            <label id="Category">Age Rating</label><br></br>
             <select id="categorySelect" value={ageRating} onChange={handleAgeRatingChange} required>
               <option value="">Select</option>
               <option value="5+">5+</option>
@@ -189,19 +214,22 @@ const FileUploadModal = () => {
 
           <div id="sampleScreenshotContainer" className="flex flex-col">
             <label>Sample Screenshots:</label>
-            <input id="sampleScreenshotInput" type="file" multiple onChange={handlescreenshotFileChange}  required/>
+            <input id="sampleScreenshotInput" type="file" multiple onChange={handlescreenshotFileChange} required />
           </div>
           <div id="sampleVideoContainer" className="flex flex-col">
             <label>Sample Videos:</label>
-            <input id="sampleVideoInput" type="file" onChange={handlevideoFileChange} required/>
+            <input id="sampleVideoInput" type="file" onChange={handlevideoFileChange} required />
           </div>
           <div id="appIconContainer" className="flex flex-col">
             <label>App Icons:</label>
-            <input id="appIconInput" type="file" onChange={handleappiconFileChange} required/>
+            <input id="appIconInput" type="file" onChange={handleappiconFileChange} required />
           </div>
           <div id="uploadAPKContainer" className="flex flex-col">
             <label>Upload APK File:</label>
             <input id="uploadAPKInput" type="file" onChange={handleApkFileChange} required />
+          </div>
+          <div id="priceinput">
+            <Input label="Enter Price (USD)" inputType="text" value={price} onChange={handlePriceChange} />
           </div>
           <div id="previewButtonContainer">
             <Primarybtn id="previewButton" buttonText="Preview" />

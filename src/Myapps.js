@@ -6,76 +6,129 @@ import TesterNavbar from "./Components/TesterNavbar";
 import "./Myapps.css";
 import submitIcon from "./icons/Submit_icon.png";
 import analysisIcon from "./icons/analysis_icon.png";
+import approveIcon from "./icons/approve-icon.png";
+import rejectIcon from "./icons/reject-icon.png"
 import PrimaryButton from "./Components/PrimaryButton";
 
 function Myapps() {
-  const fileToAppIdMap = {};
-  const hashValToAppIdMap = {};
   const [apps, setApps] = useState([]);
+  const [appIcons, setAppIcons] = useState({});
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
+
   const newApp = () => {
     navigate("../Upload");
   };
 
-  useEffect(() => {
+  const extractValue = (dynamoDBItem) => {
+    const extractedItem = {};
+    for (const key in dynamoDBItem) {
+      extractedItem[key] = dynamoDBItem[key].S; // Assuming all attributes are of type 'S' (string)
+    }
+    return extractedItem;
+  };
 
+ 
+  useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get("http://localhost:4000/applist/getApp");
-        setApps(response.data.apps);
-        await main();
+        const response = await axios.get("http://localhost:4000/app/getApps");
+        const extractedApps = response.data.map((app) => extractValue(app));
+        setApps(extractedApps);
       } catch (error) {
         console.error("Error fetching apps:", error);
       }
     }
+
     fetchData();
   }, []);
 
-  async function main() {
+ 
+  useEffect(() => {
+    async function fetchAppIcons() {
+      try {
+        const iconPromises = apps.map(async (app) => {
+          try {
+            const iconResponse = await axios.get(`http://localhost:4000/app/icons/${app.app_id}`);
+            return { app_id: app.app_id, iconUrl: iconResponse.data[0].url };
+          } catch (error) {
+            console.error(`Error fetching icon for app ${app.app_id}:`, error);
+            return { app_id: app.app_id, iconUrl: null };
+          }
+        }); 
+        const icons = await Promise.all(iconPromises);
+        const iconMap = icons.reduce((acc, { app_id, iconUrl }) => {
+          acc[app_id] = iconUrl;
+          return acc;
+        }, {});
+
+        setAppIcons(iconMap);
+      } catch (error) {
+        console.error("Error fetching app icons:", error);
+      }
+    }
+
+    if (apps.length > 0) {
+      fetchAppIcons();
+    }
+  }, [apps]);
+  useEffect(() => {
+    async function main() {
+      try {
+        for (const app of apps) {
+          console.log(`appname of current processing:`, app.appname);
+          await processApp(app);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    if (apps.length > 0) {
+      main();
+    }
+  }, [apps]);
+
+  async function processApp(app) {
     try {
-      const queueData = await fetchapkfromQueue();
-      // console.log(queueData);
-      // Mapping app id to filename
-      for (let i = 0; i < queueData.filesData.length; i++) {
-        const fileName = queueData.filesData[i];
-        const appId = queueData.appIds[i];
-        fileToAppIdMap[fileName] = appId;
-      }
-
-      for (const file of queueData.filesData) {
-        const serveFileLink = await filetolink(file);
-        const responsefile = await fetch(serveFileLink);
-        // console.log(responsefile);
-        const hashVal = await mobsfUpload(new File([await responsefile.blob()], `${file}`));
-        // console.log(hashVal);
-        const hashvalresp = await sendhashvalue(hashVal, fileToAppIdMap[file]);
-        // console.log(`hashvalresp `, hashvalresp);
-        hashValToAppIdMap[fileToAppIdMap[file]] = hashVal;
-        // console.log(`hash value of ${fileToAppIdMap[file]}`, hashValToAppIdMap[fileToAppIdMap[file]]);
-        const scanResult = await mobsfScan(hashVal);
-        const jsonReport = await mobsfjsonReport(hashVal);
-        // console.log(`json report  of ${fileToAppIdMap[file]}`, jsonReport);
-        const savejsonReportresponse = await sendjsonReport(jsonReport, fileToAppIdMap[file]);
-      }
-
-      // for (let i = 0; i < queueData.filesData.length; i++) {
-      //   console.log(`hashvalue of ${fileToAppIdMap[queueData.filesData[i]]}`, hashValToAppIdMap[fileToAppIdMap[queueData.filesData[i]]]);
-      // }
-
-      // for (let i = 0; i < queueData.filesData.length; i++) {
-      //   console.log(`file name of ${queueData.filesData[i]}`, fileToAppIdMap[queueData.filesData[i]]);
-      // }
+      const apkfile = await fetchapk(app.app_id);
+      // console.log(`apk file ${app.appname}`, apkfile);
+      const apkBlob = await fetchBlobFromUrl(apkfile.url);
+      // console.log(`apk file of ${app.appname}`, apkfile.url);
+      const fileName = apkfile.key.split("/").pop(); // Extract the file name from the key
+      const apkFile = new File([apkBlob], fileName, { type: apkBlob.type });
+      const hashVal = await mobsfUpload(apkFile);
+      // console.log(`hash value of ${app.appname}`, hashVal);
+      const hashvalresp = await sendhashvalue(app.app_id, hashVal);
+      // console.log(`hash value response`, hashvalresp);
+      const jsonReport = await mobsfjsonReport(hashVal);
+      // console.log(`json report of ${app.appname}`, jsonReport);
+      const savejsonReportresponse = await sendjsonReport(app.app_id, jsonReport);
+      console.log(`Everything done for ${app.appname}`, savejsonReportresponse);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(`Error processing app ${app.appname}:`, error);
     }
   }
 
-  async function fetchapkfromQueue() {
+
+  async function fetchBlobFromUrl(url) {
     try {
-      const response = await fetch("http://localhost:4000/fetchapk/fetchname");
+      const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Failed to fetch queue data");
+        throw new Error("Failed to fetch the APK content");
+      }
+      return await response.blob();
+    } catch (error) {
+      console.error("Error fetching blob from URL:", error);
+      return null;
+    }
+  }
+
+  async function fetchapk(app_id) {
+    try {
+      const response = await fetch(`http://localhost:4000/app/fetchapkfile/${app_id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch apk file");
       }
       return await response.json();
     } catch (error) {
@@ -85,38 +138,26 @@ function Myapps() {
     }
   }
 
-  async function filetolink(filename) {
-    try {
-      const servefile = `http://localhost:4000/fetchapk/fetchfile/${filename}`;
-      return servefile;
-    } catch (error) {
-      console.error("Error creating file link:", error);
-      throw error;
-    }
-  }
-
-  async function sendjsonReport(jsonReport, app_id) {
-
+  async function sendjsonReport(app_id, jsonReport) {
     const data = {
+      app_id,
       jsonReport,
-      app_id
     };
-    // console.log(jsonReport);
     try {
-      const response = await axios.post("http://localhost:4000/save/savejson", data);
+      const response = await axios.post(`http://localhost:4000/mobsf/savejson`, data);
       return response.data; // Assuming you want to return data from the backend
     } catch (error) {
       throw new Error(error);
     }
   }
-  async function sendhashvalue(hashvalue, app_id) {
 
+  async function sendhashvalue(app_id, hashvalue) {
     const data = {
+      app_id,
       hashvalue,
-      app_id
     };
     try {
-      const response = await axios.post("http://localhost:4000/save/savehashvalue", data);
+      const response = await axios.post("http://localhost:4000/mobsf/savehashvalue", data);
       return response.data; // Assuming you want to return data from the backend
     } catch (error) {
       throw new Error(error);
@@ -127,7 +168,7 @@ function Myapps() {
 
   async function mobsfUpload(file) {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
     try {
       const response = await axios.post("http://localhost:8000/api/v1/upload", formData, {
         headers: {
@@ -146,7 +187,7 @@ function Myapps() {
 
   async function mobsfScan(hashValue) {
     const formData = new FormData();
-    formData.append('hash', hashValue);
+    formData.append("hash", hashValue);
     try {
       const response = await axios.post("http://localhost:8000/api/v1/scan", formData, {
         headers: {
@@ -165,7 +206,7 @@ function Myapps() {
 
   async function mobsfjsonReport(hashValue) {
     const formData = new FormData();
-    formData.append('hash', hashValue);
+    formData.append("hash", hashValue);
     try {
       const response = await axios.post("http://localhost:8000/api/v1/report_json", formData, {
         headers: {
@@ -182,18 +223,12 @@ function Myapps() {
     }
   }
 
-
-
-
-
   const viewAppDetails = (app_id) => {
-    navigate(`../AppDetails/`, { state: { app_id: app_id, hashValue: hashValToAppIdMap[app_id] } });
+    navigate(`../AppDetails/`, { state: { app_id: app_id } });
   };
 
   return (
-
     <div className="myapps-bg">
-
       <div>
         {/* Conditional rendering based on the role */}
         {role === "developer" && <Navbar />}
@@ -206,8 +241,6 @@ function Myapps() {
       )}
 
       <div className="app-container">
-
-
         <div className="header-section mb-8 m-8">
           <h1 className="text-3xl font-bold text-gray-800">MyApps</h1>
           <p className="text-base text-gray-600">
@@ -215,24 +248,34 @@ function Myapps() {
           </p>
         </div>
         <div className="flex flex-wrap justify-right">
-          {apps.map((app, index) => (
-            <div
-              id="applists"
-              className="app-item p-8 border border-gray-300 rounded-lg shadow-md mb-8 cursor-pointer transform transition-transform duration-300 hover:scale-105  ml-auto"
-              key={index}
-              onClick={() => viewAppDetails(app.app_id)}
-            >
-              <h3 className="app-name text-base font-bold">{app.appname}</h3>
-              <p className="app-category">Category: {app.category_id}</p>
-              <p className="app-status">Status: {app.status}</p>
-              {app.status === "Submitted" ? (
-                <img src={submitIcon} id="submit_icon" alt="Submit Icon" />
-              ) : null}
-              {app.status === "Analyzed" ? (
-                <img src={analysisIcon} id="submit_icon" alt="Submit Icon" />
-              ) : null}
-            </div>
-          ))}
+          {apps.map((app, index) => {
+           const iconUrl = appIcons[app.app_id];
+            return (
+              <div
+                id="applists"
+                className="app-item p-8 border border-gray-300 rounded-lg shadow-md mb-8 cursor-pointer transform transition-transform duration-300 hover:scale-105 ml-auto"
+                key={index}
+                onClick={() => viewAppDetails(app.app_id)}
+              >
+                <h3 className="app-name text-base font-bold">{app.appname}</h3>
+                {iconUrl && <img src={iconUrl} className="appicon" alt=""  />} 
+                <p className="app-category">Category: {app.category_id}</p>
+                <p className="app-status">Status: {app.status}</p>
+                {app.status === "Submitted" ? (
+                  <img src={submitIcon} id="submit_icon" alt="Submit Icon" />
+                ) : null}
+                {app.status === "Analyzed" ? (
+                  <img src={analysisIcon} id="submit_icon" alt="Submit Icon" />
+                ) : null}
+                  {app.status === "Approved" ? (
+                  <img src={approveIcon} id="submit_icon" alt="Submit Icon" />
+                ) : null}
+                     {app.status === "Rejected" ? (
+                  <img src={rejectIcon} id="submit_icon" alt="Submit Icon" />
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

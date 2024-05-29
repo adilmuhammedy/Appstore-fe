@@ -9,6 +9,10 @@ import Preview from './Preview.js';
 import AppDetails from './AppDetails.js';
 import Profile from './Profile.js';
 import AppAnalysisDetails from './AppAnalysis.js';
+import PrivateRoute from './PrivateRoute';
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import { SnackbarProvider, useSnackbar } from 'notistack'
 
 function App() {
   useEffect(() => {
@@ -17,19 +21,32 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#575757",
+            color: "#FFFFFF",
+          },
+          duration: 3500,
+        }}
+      />
       <Routes>
+
         <Route exact path="/" element={<LoginPage />} />
-        {/* <Route path="/Home" element={<Home/>} /> */}
-        <Route path="/Myapps" element={<Myapps />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Upload" element={<Upload />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Preview" element={<Preview />} />
-        <Route path="/AppDetails" element={<AppDetails />} />
-        <Route path="/AppAnalysis" element={<AppAnalysisDetails />} />
+        {/* Use PrivateRoute for protected routes */}
+
+        <Route path="/Myapps" element={<PrivateRoute element={<Myapps />} />} />
+        <Route path="/Upload" element={<PrivateRoute element={<Upload />} />} />
+        <Route path="/Profile" element={<PrivateRoute element={<Profile />} />} />
+        <Route path="/Preview" element={<PrivateRoute element={<Preview />} />} />
+        <Route path="/AppDetails" element={<PrivateRoute element={<AppDetails />} />} />
+        <Route path="/AppAnalysis" element={<PrivateRoute element={<AppAnalysisDetails />} />} />
       </Routes>
     </BrowserRouter>
-
   );
 }
 

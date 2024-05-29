@@ -4,17 +4,16 @@ import TesterNavbar from './Components/TesterNavbar';
 import './Profile.css';
 import avatar from './images/profile_image.jpg';
 const Profile = () => {
-  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
+ 
   const role = localStorage.getItem('role');
-  const [joinedDate, setJoinedDate] = useState(null);
   useEffect(() => {
     // Function to fetch user data
     // console.log(localStorage.getItem('token'))
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
+        const username = localStorage.getItem('username');
+        if (!username) {
           throw new Error('token not found');
         }
         const response = await fetch('http://localhost:4000/auth/profile', {
@@ -22,17 +21,14 @@ const Profile = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ token })
+          body: JSON.stringify({ username })
         });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const userData = await response.json();
         console.log(userData);
-        setUser(userData);
-        const formattedDate = new Date(userData.createdAt);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        setJoinedDate(formattedDate.toLocaleDateString('en-US', options));
+        setUsername(userData);
       } catch (error) {
         console.error('Error fetching user data:', error);
         // Handle error
@@ -53,11 +49,11 @@ const Profile = () => {
       </div>
       <h1 className="profiletxt">Hey {role} !</h1>
       <div className="containerprofile">
-        {user ? (
+        {username ? (
           <div className='userdetails'>
-            <p className="usernameprofile">Username:  &nbsp; {user.user}</p><br></br>
-            <p>Role:  &nbsp; {user.role}</p><br></br>
-            <p>Joined on: &nbsp; {joinedDate}</p>
+            <p className="usernameprofile">Username:  &nbsp; {username}</p><br></br>
+            <p>Role:  &nbsp; {role}</p><br></br>
+            {/* <p>Joined on: &nbsp; {joinedDate}</p> */}
             {/* Add more user information as needed */}
             <img className="avatar" src={avatar}></img>
           </div>

@@ -1,9 +1,12 @@
 #secbtn{
-    width: 90px;
-    padding: 8px;
-    background-color: rgba(0, 0, 0, 0.8);
+    width: 80px;
+    padding: 6px;
+    background-color: rgba(0, 0, 0, 0.612);
     color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+}
+#secbtn:hover {
+    background-color: rgba(0, 0, 0, 0.886)
 }

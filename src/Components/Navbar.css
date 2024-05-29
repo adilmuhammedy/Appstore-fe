@@ -7,22 +7,29 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   z-index: 1000; 
+
 }
 
 #nav-container {
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 20px;
+  top: 80px;
   left: 0;
   z-index: 10001; 
 }
-
+.navallgoimg{
+  position: absolute;
+  top:-30px;
+  left:60px;  
+  width:80px;
+  height:30px;
+}
 .nav-link {
   width: 120px;
   color: white;
-  margin-bottom: 20px;
-  margin-left: 10px;
+  margin-bottom: 1px;
+  margin-left: 0px;
   list-style-type: none;
   text-decoration: none;
   padding: 10px;
@@ -40,9 +47,9 @@
   background-color: white;
 }
 
-.nav-link:hover {
+.nav-item:hover {
   background-color: rgba(228, 228, 228, 0.231);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 #homeimg {

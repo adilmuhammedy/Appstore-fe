@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import myappsimg from '../icons/apps.png';
 import analyticsimg from '../icons/analytics.png';
 import profileimg from '../icons/profile.png';
 import settingimg from '../icons/settings.png';
 import logoutimg from '../icons/Logout.png';
+import allgoimage from '../images/Allgoblack.png';
 import './Navbar.css';
 
 function Navbar() {
@@ -14,47 +16,47 @@ function Navbar() {
             window.location.href = '/';
         }
     }, []);
-
+    const navigate = useNavigate();
     const handleLogout = () => {
-        // localStorage.removeItem('token');
         localStorage.clear();
-        window.location.href = '/';
+        navigate('/');
     };
 
     const handleMyapps = () => {
-        window.location.href = '../Myapps';
+        navigate('../Myapps');
     };
     const handleProfile = () => {
-        window.location.href = '../Profile';
+        navigate('../Profile');
     };
 
     return (
-        <div> 
+        <div>
             <div id="navbar">
                 {/* Sidebar content */}
             </div>
             <div id="nav-container">
                 <nav>
-                    <ul className="flex flex-col ml-5">
-                        <li className="flex items-center mb-4">
-                            <img src={myappsimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span onClick={handleMyapps} className="nav-link cursor-pointer">My Apps</span>
+                    <img className="navallgoimg" src={allgoimage} alt='' />
+                    <ul class="flex flex-col ml-5">
+                        <li class="nav-item flex items-center mb-4">
+                            <img src={myappsimg} alt="" class="w-5 h-5 ml-1 mr-2" />
+                            <span onClick={handleMyapps} class="nav-link cursor-pointer">My Apps</span>
                         </li>
-                        <li className="flex items-center mb-4">
-                            <img src={analyticsimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span className="nav-link">Analytics</span>
+                        <li class="nav-item flex items-center mb-4">
+                            <img src={analyticsimg} alt="" class="w-5 h-5 ml-1 mr-2" />
+                            <span class="nav-link cursor-pointer">Analytics</span>
                         </li>
-                        <li className="flex items-center mb-4">
-                            <img src={profileimg} alt='' className="w-5 h-5  mb-5 ml-1 " />
-                            <span onClick={handleProfile} className="nav-link">Profile</span>
+                        <li class="nav-item flex items-center mb-4">
+                            <img src={profileimg} alt="" class="w-5 h-5 ml-1 mr-2" />
+                            <span onClick={handleProfile} class="nav-link cursor-pointer">Profile</span>
                         </li>
-                        <li className="flex items-center mb-4">
-                            <img src={settingimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span className="nav-link cursor-pointer">Settings</span>
+                        <li class="nav-item flex items-center mb-4">
+                            <img src={settingimg} alt="" class="w-5 h-5 ml-1 mr-2" />
+                            <span class="nav-link cursor-pointer">Settings</span>
                         </li>
-                        <li className="flex items-center mb-4">
-                            <img src={logoutimg} alt='' className="w-5 h-5  mb-5 ml-1 mr-2" />
-                            <span onClick={handleLogout} className="nav-link cursor-pointer">Logout</span>
+                        <li class="nav-item flex items-center mb-4">
+                            <img src={logoutimg} alt="" class="w-5 h-5 ml-1 mr-2" />
+                            <span onClick={handleLogout} class="nav-link cursor-pointer">Logout</span>
                         </li>
                     </ul>
                 </nav>

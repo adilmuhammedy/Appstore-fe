@@ -5,7 +5,7 @@
     background-color: rgba(74, 72, 77, 0.53);
 }
 
-#reg-container{
+#reg-container {
     position: absolute;
     left: 400px;
     top: 50px;
@@ -15,72 +15,72 @@
     background-color: rgba(241, 241, 243, 0.705);
 }
 
-#regtext{
-    position:absolute;
-    top:50px;
-    left:150px;
+#regtext {
+    position: absolute;
+    top: 50px;
+    left: 150px;
     font-size: larger;
-    font-weight:bolder
+    font-weight: bolder
 }
-#usernameinput{
-    position:absolute;
-    top:100px;
-    left:80px;
- 
-}
-#passwordinput{
+
+#usernameinput {
     position: absolute;
-    top:190px;
-    left:80px;
+    top: 100px;
+    left: 80px;
+
 }
-#confirminput{
-    position:absolute;
-    top:280px;
-    left:80px;
-}
-#roletext{
+
+#passwordinput {
     position: absolute;
-    left:80px;
-    top:370px;  
+    top: 190px;
+    left: 80px;
 }
-#role{
+
+#confirminput {
     position: absolute;
-    left:80px;
-    top:400px;
+    top: 280px;
+    left: 80px;
+}
+
+#roletext {
+    position: absolute;
+    left: 80px;
+    top: 370px;
+}
+
+#role {
+    position: absolute;
+    left: 80px;
+    top: 400px;
     width: 220px;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
 
-#regbtn{
+#regbtn {
     position: absolute;
-    top:490px;
-    left:240px;
+    top: 490px;
+    left: 240px;
 }
-#gobackbtn{
+
+#gobackbtn {
     position: absolute;
-    top:490px;
-    left:60px;
+    top: 490px;
+    left: 60px;
 }
-#roleerror{
-    position:absolute;
-    top:430px;
-    left:80px;
+
+#roleerror {
+    position: absolute;
+    top: 430px;
+    left: 80px;
 }
+
 .error {
+    position: absolute;
     color: red;
     font-size: 0.8rem;
-    margin-top: 5px;
-  }
-
-
-
-
-
-
-
-
-
-
-
+    margin-top: 50px;
+    top: 400px;
+    left: 80px;
+}

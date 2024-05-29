@@ -8,19 +8,22 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
 }
 
 /* Popup content */
 .popup-content {
   position: relative;
-  left:100px;
+  left: 100px;
   background-color: #fefefe;
-  margin: 10% auto; /* Center the popup vertically and horizontally */
+  margin: 10% auto;
+  /* Center the popup vertically and horizontally */
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 800px; /* Set maximum width for the popup */
+  max-width: 800px;
+  /* Set maximum width for the popup */
   border-radius: 10px;
 }
 
@@ -36,27 +39,35 @@
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 10px;
-  border: 1px solid #888; /* Add a border */
-  padding: 8px; /* Add padding for spacing */
-  border-radius: 4px; /* Add border radius for rounded corners */
+  border: 1px solid #888;
+  /* Add a border */
+  padding: 8px;
+  /* Add padding for spacing */
+  border-radius: 4px;
+  /* Add border radius for rounded corners */
   display: block;
 }
 
 /* Image styling */
 .popup-content img {
-  width: 50%; /* Adjust image width to fill the container */
-  max-width: 50%; /* Ensure images don't exceed the width of the container */
+  width: 50%;
+  /* Adjust image width to fill the container */
+  max-width: 50%;
+  /* Ensure images don't exceed the width of the container */
   height: auto;
-  margin-bottom: 20px; /* Add margin bottom for spacing */
+  margin-bottom: 20px;
+  /* Add margin bottom for spacing */
   border-radius: 8px;
 }
 
 /* Video styling */
 .popup-content video {
-  width: 50%; /* Adjust video width to fill the container */
-  max-width: 50%; /* Ensure videos don't exceed the width of the container */
-  height: auto;
-  margin-bottom: 20px; /* Add margin bottom for spacing */
+  width: 50%;
+  /* Adjust video width to fill the container */
+  max-width: 30%;
+  /* Ensure videos don't exceed the width of the container */
+  margin-bottom: 20px;
+  /* Add margin bottom for spacing */
   border-radius: 8px;
 }
 
@@ -64,7 +75,8 @@
 .flex {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px; /* Add margin top for spacing */
+  margin-top: 20px;
+  /* Add margin top for spacing */
 }
 
 /* Button styling */

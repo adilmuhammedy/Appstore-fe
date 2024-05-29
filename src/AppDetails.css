@@ -3,16 +3,14 @@
     margin-top: 50px;
     margin-left: 300px;
     padding: 20px;
-    overflow: hidden;
-    /* This will contain the absolute positioned elements */
 }
 
 .app-nametext {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     color: #333;
     font-size: 40px;
+    font-weight: bold;
 }
-
 
 .app-info {
     background-color: #fff;
@@ -23,43 +21,80 @@
 
 .info-label {
     font-weight: bold;
-    margin-right: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.rhs.eachDetail{
+    margin-bottom:100px;
+}
+.eachDetail {
+    margin-bottom: 33px;
+}
+.app-info input {
+    position: relative;
+    width: 220px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.rhs {
+    margin-top:  -328px;
+    margin-left: 420px;
 }
 
+.longdesc-span{
+    position: absolute;
+    top: 230px;
+    font-weight: bold;
+
+}
+.longdesc-input {
+    position: relative;
+    margin-top: -390px; /* Adjust as necessary for proper alignment */
+    margin-left:0px;
+    width: 300px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.shortdesc-input{
+    position: relative;
+    margin-top: 9px;
+    width: 300px;
+    height:100px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
 .app-info p {
     margin-bottom: 10px;
 }
-
 .media-section {
-    margin-top: 70px;
+    margin-top: 10px;
+}
+
+#screenshot {
+    width: 70%;
+    border-radius: 10px;
 }
 
 .screenshot-list {
     position: relative;
-    /* Change to relative */
     width: auto;
-    /* Auto width */
     overflow-x: auto;
-    /* Horizontal scroll for overflowing images */
     white-space: nowrap;
-    /* Prevents wrapping */
 }
 
 .app-icons {
     position: relative;
-    /* Change to relative */
     margin-top: 20px;
-    /* Space between sections */
+    border-radius: 10px;
 }
 
 .app-icon-list {
     display: flex;
-    /* Make the icons display in a flex container */
     overflow-x: auto;
-    /* Horizontal scroll for overflowing icons */
     gap: 10px;
-    /* Gap between icons */
     margin-top: 20px;
     height: 100px;
     width: 100px;
@@ -67,38 +102,33 @@
 
 .sample-videos {
     position: relative;
-    /* Change to relative */
     margin-top: 20px;
-    /* Space between sections */
+    border-radius: 10px;
 }
 
-.video-list {
+#video-list {
     display: flex;
-    /* Make the videos display in a flex container */
     overflow-x: auto;
-    /* Horizontal scroll for overflowing videos */
     gap: 10px;
-    /* Gap between videos */
+    width: 30%;
 }
 
-
-
-#deleteappbutton {
+#deleteappbutton, #analysisbtn {
     position: absolute;
     margin-bottom: 40px;
+}
+
+#deleteappbutton {
     margin-left: 600px;
 }
 
 #editappbutton {
     margin-left: 400px;
-    /* Adjust this margin as needed */
     margin-bottom: 40px;
 }
 
 #analysisbtn {
-    position: absolute;
     margin-left: 400px;
-    margin-bottom: 40px;
 }
 
 #bigbtn {
@@ -106,25 +136,111 @@
     margin-bottom: 40px;
 }
 
-.app-info input {
-    position: absolute;
-    width: 220px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-
-}
-
-.eachDetail {
-    margin-bottom: 35px;
-}
-
-.rhs {
-    margin-top: -300px;
-    margin-left: 500px;
-}
-
 .updatebutton {
     margin-left: 300px;
     margin-top: 20px;
+}
+
+.statusvalue {
+    margin-left: 20px;
+}
+
+.validation-container {
+    max-width: 760px;
+    margin-top: 50px;
+    margin-left: 320px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.heading-validation {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.testcases {
+    display: flex;
+    flex-direction: column;
+}
+
+.testcase-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.testcase-text {
+    flex-grow: 1;
+    margin: 0;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.pass-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 70px;
+}
+
+.fail-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 120px;
+}
+
+.finalbtns {
+    padding: 20px;
+}
+
+.approve-button, .reject-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.approve-button {
+    background-color: #28a745;
+    margin-left: 500px;
+}
+
+.approve-button:hover {
+    background-color: #218838;
+}
+
+.reject-button {
+    background-color: #dc3545;
+    margin-left: 60px;
+}
+
+.reject-button:hover {
+    background-color: #c82333;
+}
+
+.approve-button.disabled, .reject-button.disabled, .pass-buttons.disabled, .fail-buttons.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.status {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 620px;
+}
+
+.statusresult {
+    position: absolute;
+    right: 250px;
 }

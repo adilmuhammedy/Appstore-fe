@@ -4,9 +4,12 @@ import allgoimage from './images/Allgoblack.png';
 import PrimaryButton from './Components/PrimaryButton';
 import Input from './Components/Inputfield';
 import Loading from './Components/FoursquareLoading';
-
-
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import { SnackbarProvider, useSnackbar } from 'notistack'
+import SecondaryButton from './Components/SecondaryButton';
 function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
@@ -23,9 +26,13 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const handleLogin = async () => {
     if (!username.trim() || !password.trim()) {
-      window.alert("Please fill all fields");
+      enqueueSnackbar("Please fill all fields", {
+        variant: 'warning'
+      });
+
     } else {
       try {
         setLoading(true);
@@ -38,30 +45,33 @@ function Login() {
           body: JSON.stringify({ username, password }),
           // credentials: 'include' // Include cookies
         });
-
         if (response.ok) {
-          // console.log(`hi`);
-
+          enqueueSnackbar("Login success", {
+            variant: 'success'
+          });
           const data = await response.json();
-          const { token, role } = data;
-          const tokenrecv = token;
-          console.log("Token received:", tokenrecv);
-          console.log(`Role: `, role);
-          // Store the token in localStorage
-          localStorage.setItem('token', tokenrecv);
+          const role = data.role;
+          const token = data.token;
+          const username = data.username;
+          localStorage.setItem('token', token);
           localStorage.setItem('role', role);
+          localStorage.setItem('username', username);
+          navigate('/Myapps')
 
-          // Redirect to dashboard or perform any other action upon successful login
-          window.location.href = '/Myapps';
-          // window.alert("Login Successful");
         } else {
           const data = await response.json();
           setErrorMessage(data.error || 'An error occurred during login');
-          window.alert(errorMessage);
+          // window.alert(errorMessage);
+          enqueueSnackbar(data.error, {
+            variant: 'error'
+          });
         }
       } catch (error) {
         console.error('Error during login:', errorMessage);
         setErrorMessage('An error occurred during login');
+        enqueueSnackbar("An error occurred during login, try again", {
+          variant: 'error'
+        });
       } finally {
         setLoading(false); // Set loading to false when login process completes
       }
@@ -82,24 +92,16 @@ function Login() {
             <Input label="Password " inputType="password" value={password} onChange={handlePasswordChange}></Input>
           </div>
           <div>
-            <input type="checkbox" id="keep-logged-in" checked={keepLoggedIn} onChange={(e) => setKeepLoggedIn(e.target.checked)} />
-            <label id="keep-logged-in">Keep me logged in</label>
-          </div>
-          <div>
             <a href="" id="forgot">Forgot password?</a>
           </div>
           <div id="loginbtn" onClick={handleLogin}>
             <PrimaryButton buttonText="Login" />
           </div>
-          <div id="signup-container">
-            <p>Don't have an account yet?</p>
-
-            <div id="creatone" onClick={handleCreateOne}>
-              <PrimaryButton buttonText="CreateOne" />
-            </div>
+          <p id="signup-container">Don't have an account yet?</p>
+          <div id="creatone" onClick={handleCreateOne}>
+            <SecondaryButton buttonText="Sign up" />
           </div>
         </div>
-
       </div>
     </div>
   );
