@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import './Login.css';
-import allgoimage from './images/Allgoblack.png';
-import PrimaryButton from './Components/PrimaryButton';
-import Input from './Components/Inputfield';
-import Loading from './Components/FoursquareLoading';
+import '../Css/Login.css';
+import allgoimage from '../images/Allgoblack.png';
+import PrimaryButton from '../Components/PrimaryButton';
+import Input from '../Components/Inputfield';
+import Loading from '../Components/FoursquareLoading';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+// import { EyeIcon, EyeOffIcon } from "react-icons/fa";
 import { SnackbarProvider, useSnackbar } from 'notistack'
-import SecondaryButton from './Components/SecondaryButton';
+import SecondaryButton from '../Components/SecondaryButton';
 function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -15,6 +16,7 @@ function Login() {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleCreateOne = () => {
     window.location.href = './Register';
@@ -90,10 +92,13 @@ function Login() {
           </div>
           <div id="passwordd">
             <Input label="Password " inputType="password" value={password} onChange={handlePasswordChange}></Input>
+            {/* <span onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </span> */}
           </div>
-          <div>
+          {/* <div>
             <a href="" id="forgot">Forgot password?</a>
-          </div>
+          </div> */}
           <div id="loginbtn" onClick={handleLogin}>
             <PrimaryButton buttonText="Login" />
           </div>

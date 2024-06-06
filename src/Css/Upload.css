@@ -1,0 +1,172 @@
+/* styles.css */
+
+/* Close button styles */
+#closeBtn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
+}
+
+/* Container styles */
+#uploadcontainer {
+  position: fixed;
+  left: 260px;
+  top: 30px;
+  width: calc(100% - 32px);
+  max-width: 900px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styles */
+#uploadTitle {
+  position: absolute;
+  left: 300px;
+  top: 0px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#apkNameInput {
+  position: absolute;
+  top: 70px;
+  left: 90px;
+}
+
+#ageRating {
+  position: absolute;
+  top: 160px;
+  left: 90px;
+}
+
+#apkCategory {
+  position: absolute;
+  top: 240px;
+  left: 90px;
+}
+
+#apkTags {
+  position: absolute;
+  top: 320px;
+  left: 90px;
+}
+.supporturl-error{
+  position: absolute;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 50px;
+  width:500px;
+  top: 18px;
+  left: 0px;
+}
+.websiteurl-error{
+  position: absolute;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 50px;
+  width:500px;
+  top: 18px;
+  left: 0px;
+}
+.price-error{
+  position: absolute;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 50px;
+  width:500px;
+  top: 18px;
+  left: 0px;
+}
+
+#supporturlInput {
+  position: absolute;
+  top: 400px;
+  left: 90px;
+}
+
+#websiteurlInput {
+  position: absolute;
+  top: 480px;
+  left: 90px;
+}
+
+#shortDescContainer {
+  position: absolute;
+  top: 570px;
+  left: 90px;
+}
+
+#shortDesc {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  width: 300px;
+  height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#longDescContainer {
+  position: absolute;
+  top: 70px;
+  left: 450px;
+}
+
+#longDesc {
+  position: absolute;
+  top: 25px;
+  left: 0px;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#priceInput {
+  position: absolute;
+  top: 650px;
+  left: 450px;
+}
+
+#apkUploadContainer {
+  position: absolute;
+  top: 560px;
+  left: 450px;
+}
+
+#videoUploadContainer {
+  position: absolute;
+  top: 480px;
+  left: 450px;
+}
+
+#screenshotUploadContainer {
+  position: absolute;
+  top: 320px;
+  left: 450px;
+}
+
+#appIconUploadContainer {
+  position: absolute;
+  top: 395px;
+  left: 450px;
+}
+
+#previewButtonContainer {
+  position: absolute;
+  left: 400px;
+  top: 750px;
+  padding:20px;
+}
+
+#categorySelect {
+  margin-top: 10px;
+  width: 220px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from './Components/Navbar';
-import TesterNavbar from './Components/TesterNavbar';
+import Navbar from '../Components/Navbar';
+import TesterNavbar from '../Components/TesterNavbar';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Preview.css';
-import Primarybtn from './Components/PrimaryButton';
-import Secondarybtn from './Components/SecondaryButton';
-import Loading from './Components/FoursquareLoading';
+import '../Css/Preview.css';
+import Primarybtn from '../Components/PrimaryButton';
+import Secondarybtn from '../Components/SecondaryButton';
+import Loading from '../Components/FoursquareLoading';
 import { SnackbarProvider, useSnackbar } from 'notistack'
 const Preview = () => {
   const [loading, setLoading] = useState(false);

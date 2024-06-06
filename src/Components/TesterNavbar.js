@@ -48,10 +48,6 @@ function TesterNavbar() {
                             <span onClick={handleProfile} class="nav-link cursor-pointer">Profile</span>
                         </li>
                         <li class="nav-item flex items-center mb-4">
-                            <img src={settingimg} alt="" class="w-5 h-5 ml-1 mr-2" />
-                            <span class="nav-link cursor-pointer">Settings</span>
-                        </li>
-                        <li class="nav-item flex items-center mb-4">
                             <img src={logoutimg} alt="" class="w-5 h-5 ml-1 mr-2" />
                             <span onClick={handleLogout} class="nav-link cursor-pointer">Logout</span>
                         </li>

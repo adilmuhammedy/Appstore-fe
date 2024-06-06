@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Components/Navbar";
-import TesterNavbar from "./Components/TesterNavbar";
-import "./Myapps.css";
-import submitIcon from "./icons/Submit_icon.png";
-import analysisIcon from "./icons/analysis_icon.png";
-import approveIcon from "./icons/approve-icon.png";
-import rejectIcon from "./icons/reject-icon.png"
-import PrimaryButton from "./Components/PrimaryButton";
+import Navbar from "../Components/Navbar";
+import TesterNavbar from "../Components/TesterNavbar";
+import "../Css/Myapps.css";
+import submitIcon from "../icons/Submit_icon.png";
+import analysisIcon from "../icons/analysis_icon.png";
+import approveIcon from "../icons/approve-icon.png";
+import rejectIcon from "../icons/reject-icon.png"
+import PrimaryButton from "../Components/PrimaryButton";
 
 function Myapps() {
   const [apps, setApps] = useState([]);
@@ -101,6 +101,8 @@ function Myapps() {
       // console.log(`hash value of ${app.appname}`, hashVal);
       const hashvalresp = await sendhashvalue(app.app_id, hashVal);
       // console.log(`hash value response`, hashvalresp);
+      const scanres = await mobsfScan(hashVal);
+        // console.log(`scan response`, scanres);
       const jsonReport = await mobsfjsonReport(hashVal);
       // console.log(`json report of ${app.appname}`, jsonReport);
       const savejsonReportresponse = await sendjsonReport(app.app_id, jsonReport);
@@ -170,7 +172,7 @@ function Myapps() {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/upload", formData, {
+      const response = await axios.post("http://localhost:8001/api/v1/upload", formData, {
         headers: {
           Authorization: `helo@123`,
           "Content-Type": `multipart/form-data`,
@@ -189,7 +191,7 @@ function Myapps() {
     const formData = new FormData();
     formData.append("hash", hashValue);
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/scan", formData, {
+      const response = await axios.post("http://localhost:8001/api/v1/scan", formData, {
         headers: {
           Authorization: `helo@123`,
           "Content-Type": `multipart/form-data`,
@@ -208,7 +210,7 @@ function Myapps() {
     const formData = new FormData();
     formData.append("hash", hashValue);
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/report_json", formData, {
+      const response = await axios.post("http://localhost:8001/api/v1/report_json", formData, {
         headers: {
           Authorization: `helo@123`,
           "Content-Type": `multipart/form-data`,

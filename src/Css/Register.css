@@ -81,6 +81,25 @@
     color: red;
     font-size: 0.8rem;
     margin-top: 50px;
-    top: 400px;
-    left: 80px;
+    width:500px;
+    top: 18px;
+    left: -30px;
+}
+.password-error{
+    position: absolute;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 50px;
+    width:300px;
+    top: 18px;
+    left: -10px;
+}
+.confirm-error{
+    position: absolute;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 50px;
+    width:200px;
+    top: 18px;
+    left: 40px;
 }

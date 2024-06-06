@@ -6,17 +6,62 @@
 }
 
 .app-nametext {
-    margin-bottom: 0;
+    margin-top: 0px;
+    margin-left: 35px;
     color: #333;
     font-size: 40px;
     font-weight: bold;
 }
 
-.app-info {
+.selection-container{
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    margin-top:100px;
+    margin-left:200px;
+}
+.selection-container p {
+    cursor: pointer;
+    margin-top:-30px;
+    margin-bottom: 10px;
+    margin-right: 70px; /* Adjust the value as needed */
+    transition: color 0.3s, opacity 0.3s; /* Smooth transitions */
+}
+.basic-info,
+.media,
+.validation {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 2px solid transparent; /* Add a transparent border initially */
+}
+
+.basic-info:hover,
+.media:hover,
+.validation:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+.active {
+  font-weight: bold; /* Make the active tab bold */
+  color: #007bff; /* Change text color of active tab */
+  border-color: #007bff; /* Change border color of active tab */
+}
+
+.app-info1 {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top:10px;
+    margin-bottom:20px;
+
+}
+.app-info2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top:-15px;
+    margin-bottom:0px;
 }
 
 .info-label {
@@ -24,13 +69,13 @@
     margin-bottom: 10px;
     margin-top: 10px;
 }
-.rhs.eachDetail{
-    margin-bottom:100px;
-}
+
 .eachDetail {
-    margin-bottom: 33px;
+    margin-top:10px;
+    margin-bottom: 37px;
 }
-.app-info input {
+
+.app-info1 input {
     position: relative;
     width: 220px;
     padding: 6px;
@@ -39,13 +84,13 @@
     margin-top: 10px;
 }
 .rhs {
-    margin-top:  -328px;
+    margin-top:  -400px;
     margin-left: 420px;
 }
 
 .longdesc-span{
     position: absolute;
-    top: 230px;
+    top: 300px;
     font-weight: bold;
 
 }
@@ -73,22 +118,56 @@
     margin-top: 10px;
 }
 
-#screenshot {
-    width: 70%;
+.screenshot {
+    width: 150px;
+    height: 100px;
     border-radius: 10px;
+   margin:10px;
 }
 
-.screenshot-list {
-    position: relative;
-    width: auto;
-    overflow-x: auto;
-    white-space: nowrap;
+.screenshot-container {
+    display: flex;
+    align-items: center;
+    margin:10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+.upload-screenshot{
+    margin-left:10px;
+    background-color: black;
+    color:white;
+    border-radius: 3px;
+    height: 30px;
+    width:80px;
+}
+.index-no{
+    margin-left:15px;
+}
+.delete-icon{
+    height:20px;
+    width:20px;
+    margin-left:400px;
+    cursor: pointer;
 }
 
 .app-icons {
     position: relative;
     margin-top: 20px;
     border-radius: 10px;
+}
+.edit-appicon{
+    height: 20px;
+    width:20px;
+    margin-left: 120px;
+    margin-top:-40px;
+    cursor: pointer;
+}
+.edit-appvideo{
+    height: 20px;
+    width:20px;
+    margin-left: 290px;
+    margin-top:-30px;
+    cursor: pointer;
 }
 
 .app-icon-list {
@@ -113,41 +192,40 @@
     width: 30%;
 }
 
-#deleteappbutton, #analysisbtn {
-    position: absolute;
-    margin-bottom: 40px;
-}
-
 #deleteappbutton {
     margin-left: 600px;
+    margin-bottom: -40px;
 }
 
 #editappbutton {
-    margin-left: 400px;
-    margin-bottom: 40px;
+    margin-top:-10px;
+    margin-left: 600px;
+ 
 }
-
 #analysisbtn {
+    position:absolute;
     margin-left: 400px;
+    margin-top:0px;
 }
 
 #bigbtn {
+    position:absolute;
     margin-left: 600px;
     margin-bottom: 40px;
 }
 
 .updatebutton {
-    margin-left: 300px;
-    margin-top: 20px;
+    margin-left: 650px;
+    margin-bottom: 40px;
 }
 
 .statusvalue {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .validation-container {
     max-width: 760px;
-    margin-top: 50px;
+    margin-top: 0px;
     margin-left: 320px;
     background-color: #fff;
     padding: 20px;
@@ -196,12 +274,27 @@
     gap: 10px;
     margin-right: 120px;
 }
+.appinfo-edit-icon{
+    margin-left:90px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.edit-icon{
+    height: 20px;
+    cursor: pointer;
+}
+.edit-icon.disabled{
+    cursor: not-allowed;
+}
 
 .finalbtns {
     padding: 20px;
+    margin-left:60px;
 }
 
 .approve-button, .reject-button {
+
     padding: 10px 20px;
     font-size: 16px;
     color: white;
@@ -237,10 +330,10 @@
 .status {
     position: relative;
     margin-top: 10px;
-    margin-left: 620px;
+    margin-left: 600px;
 }
 
 .statusresult {
     position: absolute;
-    right: 250px;
+    right: 270px;
 }

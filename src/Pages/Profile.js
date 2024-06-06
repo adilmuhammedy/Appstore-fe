@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Components/Navbar';
-import TesterNavbar from './Components/TesterNavbar';
-import './Profile.css';
-import avatar from './images/profile_image.jpg';
+import Navbar from '../Components/Navbar';
+import TesterNavbar from '../Components/TesterNavbar';
+import '../Css/Profile.css';
+import avatar from '../images/profile_image.jpg';
 const Profile = () => {
   const [username, setUsername] = useState(null);
  
